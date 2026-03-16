@@ -40,8 +40,8 @@
     .tog-btn:last-child { border-radius: 0 22px 22px 0; }
     .tog-btn.active { background: #1877F2; color: #fff; font-weight: 600; border-color: transparent; }
 
-    /* TOP BOXES ROW — Goals + Todo side by side */
-    .top-boxes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 12px 4px; }
+    /* TOP BOXES ROW — Goals + Todo + Buy */
+    .top-boxes { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 12px 10px 4px; }
 
     /* GOALS BOX */
     .goals-box {
@@ -90,10 +90,42 @@
     .todo-item { display: flex; gap: 6px; align-items: center; margin-bottom: 4px; }
     .task-check-sm { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid #1877F2; background: white; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.5rem; }
     .task-check-sm.done { background: #1877F2; border-color: #1877F2; color: white; }
-    .todo-text-sm { font-family: 'Lora', serif; font-size: 0.72rem; color: #1a3a6e; line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+    .todo-text-sm { font-family: 'Lora', serif; font-size: 0.68rem; color: #1a3a6e; line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
     .todo-text-sm.done { text-decoration: line-through; opacity: 0.5; }
-    .todo-empty { font-family: 'Lora', serif; font-style: italic; font-size: 0.72rem; color: #7aaad8; text-align: center; padding: 4px 0; }
-    .todo-more { font-size: 0.62rem; color: #1877F2; font-style: italic; margin-top: 2px; }
+    .todo-empty { font-family: 'Lora', serif; font-style: italic; font-size: 0.68rem; color: #7aaad8; text-align: center; padding: 4px 0; }
+    .todo-more { font-size: 0.6rem; color: #1877F2; font-style: italic; margin-top: 2px; }
+
+    /* BUY BOX */
+    .buy-box {
+      border-radius: 14px;
+      background: linear-gradient(135deg, #e8f0ff, #d8e8ff);
+      border: 1.5px solid #1877F2;
+      padding: 10px 12px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.12s;
+      height: 150px;
+      display: flex;
+      flex-direction: column;
+    }
+    .buy-box:active { transform: scale(0.98); }
+    .buy-box-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; flex-shrink: 0; }
+    .buy-title { font-family: 'Dancing Script', cursive; font-size: 1.1rem; font-weight: 700; color: #1877F2; }
+    .buy-edit-hint { font-family: 'Lora', serif; font-style: italic; font-size: 0.62rem; color: #5a9ae0; }
+    .buy-list { overflow: hidden; flex: 1; }
+    .buy-item { display: flex; gap: 6px; align-items: center; margin-bottom: 4px; }
+    .buy-text-sm { font-family: 'Lora', serif; font-size: 0.68rem; color: #1a3a6e; line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+    .buy-text-sm.done { text-decoration: line-through; opacity: 0.5; }
+    .buy-empty { font-family: 'Lora', serif; font-style: italic; font-size: 0.68rem; color: #7aaad8; text-align: center; padding: 4px 0; }
+    .buy-more { font-size: 0.6rem; color: #1877F2; font-style: italic; margin-top: 2px; }
+    /* BUY MODAL HEADER */
+    .mh-buy { background: linear-gradient(135deg,#1877F2,#0a5ec9); border-radius: 24px 24px 0 0; padding: 14px 18px 12px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .task-input-buy { flex: 1; border: none; border-bottom: 1.5px solid #d0e4ff; background: transparent; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #1a3a6e; outline: none; padding: 4px 2px; line-height: 1.5; width: 100%; }
+    .task-input-buy.done-input { text-decoration: line-through; opacity: 0.5; }
+    .task-input-buy::placeholder { color: #a0c4e8; font-style: italic; }
+    .task-input-buy:focus { border-bottom-color: #1877F2; }
+    .task-number-buy { font-family: 'Dancing Script', cursive; font-size: 1.3rem; font-weight: 700; color: #1877F2; min-width: 24px; line-height: 1; padding-top: 2px; flex-shrink: 0; }
 
     /* DOW LABELS */
     .dow-row { display: grid; grid-template-columns: repeat(7,1fr); background: #1877F2; padding: 6px 8px; margin-top: 8px; }
@@ -255,6 +287,17 @@
       </div>
     </div>
 
+    <!-- BUY BOX -->
+    <div class="buy-box" onclick="openBuy()">
+      <div class="buy-box-header">
+        <div class="buy-title">🛍️ To Buy</div>
+        <div class="buy-edit-hint" id="buy-hint">tap to add</div>
+      </div>
+      <div class="buy-list" id="buy-display">
+        <div class="buy-empty">Add items to buy ✨</div>
+      </div>
+    </div>
+
   </div>
 
   <!-- CALENDAR VIEW -->
@@ -326,6 +369,21 @@
     </div>
   </div>
 
+  <!-- BUY MODAL -->
+  <div class="ov hidden" id="buy-modal" onclick="closeBuy()">
+    <div class="mc" onclick="event.stopPropagation()">
+      <div class="mh-buy">
+        <div>
+          <div class="mdn">🛍️ My To Buy List</div>
+          <div class="mds">Press Enter to add a new item</div>
+        </div>
+        <button class="sbtn sbtn-goals" onclick="closeBuy()">Save ✓</button>
+      </div>
+      <div class="task-list-scroll" id="buy-task-list"></div>
+      <div class="modal-hint">Enter = new item · Tap circle to tick off · Save when done</div>
+    </div>
+  </div>
+
 <script>
   const DAY_NAMES    = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   const STORAGE_KEY  = "march2026_tasks_v5";
@@ -334,6 +392,8 @@
   const NOTES_KEY    = "march2026_notes_v5";
   const TODO_KEY     = "march2026_todo_v5";
   const TODONE_KEY   = "march2026_todone_v5";
+  const BUY_KEY      = "march2026_buy_v5";
+  const BUYDONE_KEY  = "march2026_buydone_v5";
 
   let tasks   = {};
   let done    = {};
@@ -341,6 +401,8 @@
   let notes   = {};
   let todoItems = [];
   let todoDone  = {};
+  let buyItems  = [];
+  let buyDone   = {};
   let currentDay  = null;
   let currentView = "calendar";
   let currentTab  = "tasks";
@@ -351,6 +413,8 @@
   try { notes     = JSON.parse(localStorage.getItem(NOTES_KEY))   || {}; } catch {}
   try { todoItems = JSON.parse(localStorage.getItem(TODO_KEY))    || []; } catch {}
   try { todoDone  = JSON.parse(localStorage.getItem(TODONE_KEY))  || {}; } catch {}
+  try { buyItems  = JSON.parse(localStorage.getItem(BUY_KEY))     || []; } catch {}
+  try { buyDone   = JSON.parse(localStorage.getItem(BUYDONE_KEY)) || {}; } catch {}
 
   function saveTasks()    { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));     } catch {} }
   function saveDone()     { try { localStorage.setItem(DONE_KEY,    JSON.stringify(done));      } catch {} }
@@ -358,6 +422,8 @@
   function saveNotes()    { try { localStorage.setItem(NOTES_KEY,   JSON.stringify(notes));     } catch {} }
   function saveTodo()     { try { localStorage.setItem(TODO_KEY,    JSON.stringify(todoItems)); } catch {} }
   function saveTodoDone() { try { localStorage.setItem(TODONE_KEY,  JSON.stringify(todoDone));  } catch {} }
+  function saveBuy()      { try { localStorage.setItem(BUY_KEY,     JSON.stringify(buyItems));  } catch {} }
+  function saveBuyDone()  { try { localStorage.setItem(BUYDONE_KEY, JSON.stringify(buyDone));   } catch {} }
 
   const today = new Date();
   function isToday(d) { return today.getFullYear()===2026 && today.getMonth()===2 && today.getDate()===d; }
@@ -604,25 +670,24 @@
       row.className = 'task-row';
 
       const num = document.createElement('div');
-      num.className = type === 'todo' ? 'task-number-day' : (type === 'day' ? 'task-number-day' : 'task-number-goal');
+      num.className = 'task-number-day';
       num.textContent = (idx+1) + '.';
 
-      const inputClass = type === 'day' ? 'task-input-day' : (type === 'goals' ? 'task-input-goals' : 'task-input-day');
+      const inputClass = type === 'day' ? 'task-input-day' : (type === 'goals' ? 'task-input-goals' : (type === 'buy' ? 'task-input-buy' : 'task-input-day'));
       const input = document.createElement('input');
       input.type = 'text';
       input.className = inputClass;
       input.value = val;
       input.placeholder = idx === 0
-        ? (type === 'day' ? 'What are you doing today?' : (type === 'goals' ? 'What do you want to achieve?' : 'Add a to-do item…'))
+        ? (type === 'day' ? 'What are you doing today?' : (type === 'goals' ? 'What do you want to achieve?' : (type === 'buy' ? 'What do you need to buy?' : 'Add a to-do item…')))
         : (type === 'day' ? 'Next task…' : (type === 'goals' ? 'Another goal…' : 'Next item…'));
 
-      // Checkbox for day tasks and todo items
-      if ((type === 'day' || type === 'todo') && val.trim() !== '') {
-        const doneObj = type === 'day' ? (done[currentDay] || {}) : todoDone;
+      // Checkbox for day tasks, todo and buy items
+      if ((type === 'day' || type === 'todo' || type === 'buy') && val.trim() !== '') {
+        const doneObj = type === 'day' ? (done[currentDay] || {}) : (type === 'buy' ? buyDone : todoDone);
         const isDone  = doneObj[idx] || false;
-        const checkClass = type === 'todo' ? 'task-check' : 'task-check';
         const check = document.createElement('div');
-        check.className = checkClass + (isDone ? ' checked' : '');
+        check.className = 'task-check' + (isDone ? ' checked' : '');
         check.onclick = (e) => {
           e.stopPropagation();
           if (type === 'day') {
@@ -632,6 +697,12 @@
             check.classList.toggle('checked', done[currentDay][idx]);
             input.classList.toggle('done-input', done[currentDay][idx]);
             updateDoneSubtitle();
+          } else if (type === 'buy') {
+            buyDone[idx] = !buyDone[idx];
+            saveBuyDone();
+            check.classList.toggle('checked', buyDone[idx]);
+            input.classList.toggle('done-input', buyDone[idx]);
+            renderBuyDisplay();
           } else {
             todoDone[idx] = !todoDone[idx];
             saveTodoDone();
@@ -677,10 +748,49 @@
     });
   }
 
+  // ── BUY MODAL ──
+  function openBuy() {
+    renderTaskInputs(buyItems.length > 0 ? [...buyItems, ''] : [''], 'buy-task-list', 'buy');
+    document.getElementById('buy-modal').classList.remove('hidden');
+    setTimeout(() => {
+      const first = document.querySelector('#buy-task-list .task-input-buy');
+      if (first) first.focus();
+    }, 180);
+  }
+
+  function closeBuy() {
+    const inputs = document.querySelectorAll('#buy-task-list .task-input-buy');
+    buyItems = Array.from(inputs).map(i => i.value.trim()).filter(Boolean);
+    saveBuy();
+    document.getElementById('buy-modal').classList.add('hidden');
+    renderBuyDisplay();
+  }
+
+  function renderBuyDisplay() {
+    const display = document.getElementById('buy-display');
+    const hint    = document.getElementById('buy-hint');
+    if (buyItems.length === 0) {
+      display.innerHTML = '<div class="buy-empty">Add items to buy ✨</div>';
+      hint.textContent = 'tap to add';
+    } else {
+      const shown = buyItems.slice(0,4);
+      const extra = buyItems.length - shown.length;
+      display.innerHTML = shown.map((t,i) => {
+        const isDone = buyDone[i] || false;
+        return `<div class="buy-item">
+          <div class="task-check-sm${isDone?' done':''}">${isDone?'✓':''}</div>
+          <span class="buy-text-sm${isDone?' done':''}">${t}</span>
+        </div>`;
+      }).join('') + (extra > 0 ? `<div class="buy-more">+${extra} more</div>` : '');
+      hint.textContent = 'tap to edit';
+    }
+  }
+
   // ── INIT ──
   renderCalendar();
   renderGoalsDisplay();
   renderTodoDisplay();
+  renderBuyDisplay();
 </script>
 </body>
 </html>
