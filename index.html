@@ -52,7 +52,7 @@
 
     /* CALENDAR GRID */
     .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 5px; padding: 8px; max-width: 700px; margin: 0 auto; }
-    .dc { background: #fafeff; border: 1.5px solid #b8daf4; border-radius: 10px; padding: 6px 7px; cursor: pointer; min-height: 72px; display: flex; flex-direction: column; position: relative; transition: transform 0.1s, background 0.12s; }
+    .dc { background: #fafeff; border: 1.5px solid #b8daf4; border-radius: 10px; padding: 6px 7px; cursor: pointer; height: 80px; max-height: 80px; overflow: hidden; display: flex; flex-direction: column; position: relative; transition: transform 0.1s, background 0.12s; }
     .dc:active { transform: scale(0.94); background: #e8f4ff; }
     .dc.tdy { background: #e0f0ff; border-color: #5aaad8; box-shadow: 0 0 0 2px #90c4e844; }
     .dc.emp { background: transparent; border: 1.5px dashed #cce4f4; opacity: 0.3; pointer-events: none; }
