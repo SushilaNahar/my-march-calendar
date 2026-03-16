@@ -6,6 +6,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="My March" />
+  <meta name="theme-color" content="#1877F2" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <style>html { background: #f0f6ff; }</style>
   <title>My March 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet" />
@@ -68,8 +71,8 @@
     /* TODO BOX */
     .todo-box {
       border-radius: 14px;
-      background: linear-gradient(135deg, #e8fff4, #d0f5e8);
-      border: 1.5px solid #2ecc87;
+      background: linear-gradient(135deg, #eef6ff, #e8f4ff);
+      border: 1.5px solid #1877F2;
       padding: 12px 14px;
       cursor: pointer;
       position: relative;
@@ -81,16 +84,16 @@
     }
     .todo-box:active { transform: scale(0.98); }
     .todo-box-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; flex-shrink: 0; }
-    .todo-title { font-family: 'Dancing Script', cursive; font-size: 1.1rem; font-weight: 700; color: #1aaa6e; }
-    .todo-edit-hint { font-family: 'Lora', serif; font-style: italic; font-size: 0.62rem; color: #5ad4a0; }
+    .todo-title { font-family: 'Dancing Script', cursive; font-size: 1.1rem; font-weight: 700; color: #1877F2; }
+    .todo-edit-hint { font-family: 'Lora', serif; font-style: italic; font-size: 0.62rem; color: #5a9ae0; }
     .todo-list { overflow: hidden; flex: 1; }
     .todo-item { display: flex; gap: 6px; align-items: center; margin-bottom: 4px; }
-    .todo-check-sm { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid #2ecc87; background: white; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.5rem; }
-    .todo-check-sm.done { background: #2ecc87; border-color: #2ecc87; color: white; }
-    .todo-text-sm { font-family: 'Lora', serif; font-size: 0.72rem; color: #1a4a3a; line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+    .task-check-sm { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid #1877F2; background: white; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.5rem; }
+    .task-check-sm.done { background: #1877F2; border-color: #1877F2; color: white; }
+    .todo-text-sm { font-family: 'Lora', serif; font-size: 0.72rem; color: #1a3a6e; line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
     .todo-text-sm.done { text-decoration: line-through; opacity: 0.5; }
-    .todo-empty { font-family: 'Lora', serif; font-style: italic; font-size: 0.72rem; color: #7ad4b0; text-align: center; padding: 4px 0; }
-    .todo-more { font-size: 0.62rem; color: #2ecc87; font-style: italic; margin-top: 2px; }
+    .todo-empty { font-family: 'Lora', serif; font-style: italic; font-size: 0.72rem; color: #7aaad8; text-align: center; padding: 4px 0; }
+    .todo-more { font-size: 0.62rem; color: #1877F2; font-style: italic; margin-top: 2px; }
 
     /* DOW LABELS */
     .dow-row { display: grid; grid-template-columns: repeat(7,1fr); background: #1877F2; padding: 6px 8px; margin-top: 8px; }
@@ -121,11 +124,11 @@
     .today-label { font-size: 0.42rem; font-style: italic; color: #0a5ec9; margin-left: 3px; }
     .task-preview { font-size: 0.56rem; color: #4a6a9a; line-height: 1.4; margin-top: 2px; overflow: hidden !important; max-height: 50px !important; flex: 1; }
     .task-preview-item { display: flex; gap: 2px; align-items: baseline; white-space: nowrap; overflow: hidden; }
-    .task-num-sm { color: #2ecc87; font-weight: 600; flex-shrink: 0; font-size: 0.54rem; }
+    .task-num-sm { color: #1877F2; font-weight: 600; flex-shrink: 0; font-size: 0.54rem; }
     .task-text-sm { overflow: hidden; text-overflow: ellipsis; }
     .task-done-sm { text-decoration: line-through; opacity: 0.5; }
     .more-tasks { color: #1877F2; font-size: 0.52rem; }
-    .dot { position: absolute; bottom: 4px; right: 5px; width: 5px; height: 5px; border-radius: 50%; background: #2ecc87; }
+    .dot { position: absolute; bottom: 4px; right: 5px; width: 5px; height: 5px; border-radius: 50%; background: #1877F2; }
     .cal-hint { text-align: center; font-family: 'Lora', serif; font-style: italic; font-size: 0.72rem; color: #1877F2; margin-top: 4px; opacity: 0.8; }
 
     /* LIST VIEW */
@@ -136,10 +139,10 @@
     .list-day-name { font-family: 'Dancing Script', cursive; font-size: 1.2rem; font-weight: 700; color: #1877F2; }
     .list-day-name.t { color: #0a5ec9; }
     .list-day-date { font-family: 'Lora', serif; font-style: italic; font-size: 0.7rem; color: #7aaad8; }
-    .list-task-count { font-size: 0.7rem; color: #2ecc87; font-style: italic; font-family: 'Lora', serif; font-weight: 600; }
+    .list-task-count { font-size: 0.7rem; color: #1877F2; font-style: italic; font-family: 'Lora', serif; font-weight: 600; }
     .list-task-area { padding: 8px 16px 11px; }
     .list-task-row { display: flex; gap: 10px; align-items: center; padding: 3px 0; }
-    .list-task-num { font-family: 'Dancing Script', cursive; font-size: 1rem; color: #2ecc87; font-weight: 700; min-width: 18px; }
+    .list-task-num { font-family: 'Dancing Script', cursive; font-size: 1rem; color: #1877F2; font-weight: 700; min-width: 18px; }
     .list-task-text { font-family: 'Lora', serif; font-size: 0.84rem; color: #1a3a6e; line-height: 1.5; }
     .list-task-text.done { text-decoration: line-through; opacity: 0.5; }
     .list-empty { font-family: 'Lora', serif; font-style: italic; font-size: 0.76rem; color: #a0c4e8; padding: 0 16px 11px; }
@@ -156,14 +159,14 @@
     /* GOALS MODAL HEADER */
     .mh-goals { background: linear-gradient(135deg,#1877F2,#0a5ec9); border-radius: 24px 24px 0 0; padding: 14px 18px 12px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
     /* TODO MODAL HEADER */
-    .mh-todo { background: linear-gradient(135deg,#2ecc87,#1aaa6e); border-radius: 24px 24px 0 0; padding: 14px 18px 12px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .mh-goals { background: linear-gradient(135deg,#1877F2,#0a5ec9); border-radius: 24px 24px 0 0; padding: 14px 18px 12px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
 
     .mdn { font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #fff; font-weight: 700; line-height: 1; }
     .mds { font-family: 'Lora', serif; font-style: italic; font-size: 0.72rem; color: rgba(255,255,255,0.85); margin-top: 2px; }
     .sbtn { background: #fff; border: none; border-radius: 22px; padding: 8px 18px; font-family: 'Lora', serif; font-size: 0.88rem; font-weight: 600; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); flex-shrink: 0; }
     .sbtn-day { color: #1877F2; }
     .sbtn-goals { color: #1877F2; }
-    .sbtn-todo { color: #1aaa6e; }
+    .sbtn-goals { color: #0a5ec9; }
     .sbtn:active { transform: scale(0.96); }
 
     /* MODAL TABS */
@@ -177,15 +180,15 @@
     .task-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
     .task-number-day { font-family: 'Dancing Script', cursive; font-size: 1.3rem; font-weight: 700; color: #1877F2; min-width: 24px; line-height: 1; padding-top: 2px; flex-shrink: 0; }
     .task-number-goal { font-family: 'Dancing Script', cursive; font-size: 1.3rem; font-weight: 700; color: #1877F2; min-width: 24px; line-height: 1; padding-top: 2px; flex-shrink: 0; }
-    .task-number-todo { font-family: 'Dancing Script', cursive; font-size: 1.3rem; font-weight: 700; color: #2ecc87; min-width: 24px; line-height: 1; padding-top: 2px; flex-shrink: 0; }
+    .task-number-day { font-family: 'Dancing Script', cursive; font-size: 1.3rem; font-weight: 700; color: #1877F2; min-width: 24px; line-height: 1; padding-top: 2px; flex-shrink: 0; }
 
     /* CHECKBOXES */
     .task-check { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #1877F2; background: white; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
     .task-check.checked { background: #1877F2; border-color: #1877F2; }
     .task-check.checked::after { content: '✓'; color: white; font-size: 0.72rem; font-weight: bold; }
-    .task-check-todo { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #2ecc87; background: white; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
-    .task-check-todo.checked { background: #2ecc87; border-color: #2ecc87; }
-    .task-check-todo.checked::after { content: '✓'; color: white; font-size: 0.72rem; font-weight: bold; }
+    .task-check { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #1877F2; background: white; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+    .task-check.checked { background: #1877F2; border-color: #1877F2; }
+    .task-check.checked::after { content: '✓'; color: white; font-size: 0.72rem; font-weight: bold; }
 
     /* INPUTS */
     .task-input-day { flex: 1; border: none; border-bottom: 1.5px solid #d0e4ff; background: transparent; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #1a3a6e; outline: none; padding: 4px 2px; line-height: 1.5; width: 100%; }
@@ -195,10 +198,10 @@
     .task-input-goals { flex: 1; border: none; border-bottom: 1.5px solid #d0e4ff; background: transparent; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #1a3a6e; outline: none; padding: 4px 2px; line-height: 1.5; width: 100%; }
     .task-input-goals::placeholder { color: #a0c4e8; font-style: italic; }
     .task-input-goals:focus { border-bottom-color: #1877F2; }
-    .task-input-todo { flex: 1; border: none; border-bottom: 1.5px solid #c0f0dc; background: transparent; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #1a4a3a; outline: none; padding: 4px 2px; line-height: 1.5; width: 100%; }
-    .task-input-todo.done-input { text-decoration: line-through; opacity: 0.5; }
-    .task-input-todo::placeholder { color: #7ad4b0; font-style: italic; }
-    .task-input-todo:focus { border-bottom-color: #2ecc87; }
+    .task-input-day { flex: 1; border: none; border-bottom: 1.5px solid #d0e4ff; background: transparent; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #1a3a6e; outline: none; padding: 4px 2px; line-height: 1.5; width: 100%; }
+    .task-input-day.done-input { text-decoration: line-through; opacity: 0.5; }
+    .task-input-day::placeholder { color: #7aaad8; font-style: italic; }
+    .task-input-day:focus { border-bottom-color: #1877F2; }
 
     /* NOTES */
     .notes-area { flex: 1; display: flex; flex-direction: column; padding: 14px 18px; }
@@ -311,12 +314,12 @@
   <!-- TODO MODAL -->
   <div class="ov hidden" id="todo-modal" onclick="closeTodo()">
     <div class="mc" onclick="event.stopPropagation()">
-      <div class="mh-todo">
+      <div class="mh-goals">
         <div>
           <div class="mdn">✅ My To Do List</div>
           <div class="mds">Press Enter to add a new item</div>
         </div>
-        <button class="sbtn sbtn-todo" onclick="closeTodo()">Save ✓</button>
+        <button class="sbtn sbtn-goals" onclick="closeTodo()">Save ✓</button>
       </div>
       <div class="task-list-scroll" id="todo-task-list"></div>
       <div class="modal-hint">Enter = new item · Tap circle to tick off · Save when done</div>
@@ -509,7 +512,7 @@
       display.innerHTML = shown.map((t,i) => {
         const isDone = todoDone[i] || false;
         return `<div class="todo-item">
-          <div class="todo-check-sm${isDone?' done':''}">${isDone?'✓':''}</div>
+          <div class="task-check-sm${isDone?' done':''}">${isDone?'✓':''}</div>
           <span class="todo-text-sm${isDone?' done':''}">${t}</span>
         </div>`;
       }).join('') + (extra > 0 ? `<div class="todo-more">+${extra} more</div>` : '');
@@ -576,13 +579,13 @@
     renderTaskInputs(todoItems.length > 0 ? [...todoItems, ''] : [''], 'todo-task-list', 'todo');
     document.getElementById('todo-modal').classList.remove('hidden');
     setTimeout(() => {
-      const first = document.querySelector('#todo-task-list .task-input-todo');
+      const first = document.querySelector('#todo-task-list .task-input-day');
       if (first) first.focus();
     }, 180);
   }
 
   function closeTodo() {
-    const inputs = document.querySelectorAll('#todo-task-list .task-input-todo');
+    const inputs = document.querySelectorAll('#todo-task-list .task-input-day');
     todoItems = Array.from(inputs).map(i => i.value.trim()).filter(Boolean);
     saveTodo();
     document.getElementById('todo-modal').classList.add('hidden');
@@ -601,10 +604,10 @@
       row.className = 'task-row';
 
       const num = document.createElement('div');
-      num.className = type === 'todo' ? 'task-number-todo' : (type === 'day' ? 'task-number-day' : 'task-number-goal');
+      num.className = type === 'todo' ? 'task-number-day' : (type === 'day' ? 'task-number-day' : 'task-number-goal');
       num.textContent = (idx+1) + '.';
 
-      const inputClass = type === 'day' ? 'task-input-day' : (type === 'goals' ? 'task-input-goals' : 'task-input-todo');
+      const inputClass = type === 'day' ? 'task-input-day' : (type === 'goals' ? 'task-input-goals' : 'task-input-day');
       const input = document.createElement('input');
       input.type = 'text';
       input.className = inputClass;
@@ -617,7 +620,7 @@
       if ((type === 'day' || type === 'todo') && val.trim() !== '') {
         const doneObj = type === 'day' ? (done[currentDay] || {}) : todoDone;
         const isDone  = doneObj[idx] || false;
-        const checkClass = type === 'todo' ? 'task-check-todo' : 'task-check';
+        const checkClass = type === 'todo' ? 'task-check' : 'task-check';
         const check = document.createElement('div');
         check.className = checkClass + (isDone ? ' checked' : '');
         check.onclick = (e) => {
