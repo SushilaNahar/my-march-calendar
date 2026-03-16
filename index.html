@@ -13,125 +13,201 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       min-height: 100vh;
-      background: linear-gradient(160deg, #eef6ff 0%, #fce8f0 50%, #e8f4ff 100%);
+      background: #f0f6ff;
       font-family: 'Lora', 'Georgia', serif;
       padding-bottom: 48px;
       overflow-x: hidden;
     }
 
     /* HEADER */
-    .header { background: linear-gradient(135deg, #7dc4e8 0%, #f4a8c4 100%); padding: 26px 20px 18px; text-align: center; box-shadow: 0 4px 20px rgba(80,140,200,0.18); }
-    .header-dots { color: rgba(255,255,255,0.7); letter-spacing: 16px; font-size: 0.72rem; margin-bottom: 6px; }
-    .header-month { font-family: 'Dancing Script', cursive; font-size: clamp(2.2rem,9vw,3.2rem); color: #fff; font-weight: 700; letter-spacing: 2px; text-shadow: 0 2px 14px rgba(60,100,160,0.18); line-height: 1; }
+    .header {
+      background: linear-gradient(135deg, #1877F2 0%, #0a5ec9 100%);
+      padding: 26px 20px 18px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(24,119,242,0.3);
+    }
+    .header-dots { color: rgba(255,255,255,0.6); letter-spacing: 16px; font-size: 0.72rem; margin-bottom: 6px; }
+    .header-month { font-family: 'Dancing Script', cursive; font-size: clamp(2.2rem,9vw,3.2rem); color: #fff; font-weight: 700; letter-spacing: 2px; text-shadow: 0 2px 14px rgba(0,0,0,0.15); line-height: 1; }
     .header-year { font-family: 'Lora', serif; font-size: 0.88rem; color: rgba(255,255,255,0.85); font-style: italic; letter-spacing: 5px; margin-top: 6px; }
 
     /* TOGGLE */
     .toggle-bar { display: flex; justify-content: center; padding: 12px 20px 4px; }
-    .tog-btn { padding: 8px 26px; font-family: 'Lora', serif; font-size: 0.84rem; border: 1.5px solid #90c4e8; background: transparent; color: #4a90b8; cursor: pointer; transition: all 0.15s; }
+    .tog-btn { padding: 8px 26px; font-family: 'Lora', serif; font-size: 0.84rem; border: 1.5px solid #1877F2; background: transparent; color: #1877F2; cursor: pointer; transition: all 0.15s; }
     .tog-btn:first-child { border-radius: 22px 0 0 22px; }
     .tog-btn:last-child { border-radius: 0 22px 22px 0; }
-    .tog-btn.active { background: linear-gradient(135deg,#90c4e8,#f4a8c4); color: #fff; font-weight: 600; border-color: transparent; }
+    .tog-btn.active { background: #1877F2; color: #fff; font-weight: 600; border-color: transparent; }
+
+    /* TOP BOXES ROW — Goals + Todo side by side */
+    .top-boxes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 12px 4px; }
 
     /* GOALS BOX */
-    .goals-box { margin: 12px 12px 4px; border-radius: 16px; background: linear-gradient(135deg,#daeeff,#fce0ec); border: 1.5px solid #b8daf4; padding: 14px 16px; cursor: pointer; position: relative; overflow: hidden; transition: transform 0.12s; }
+    .goals-box {
+      border-radius: 14px;
+      background: linear-gradient(135deg, #e8f4ff, #d0e8ff);
+      border: 1.5px solid #1877F2;
+      padding: 12px 14px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.12s;
+      height: 160px;
+      display: flex;
+      flex-direction: column;
+    }
     .goals-box:active { transform: scale(0.98); }
-    .goals-box-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-    .goals-title { font-family: 'Dancing Script', cursive; font-size: 1.3rem; font-weight: 700; color: #3a7abf; }
-    .goals-edit-hint { font-family: 'Lora', serif; font-style: italic; font-size: 0.68rem; color: #a0b8d0; }
-    .goals-list { padding: 0; }
-    .goals-item { display: flex; gap: 8px; align-items: baseline; margin-bottom: 4px; }
-    .goals-num { font-family: 'Dancing Script', cursive; font-size: 1rem; font-weight: 700; color: #e87aaa; min-width: 18px; }
-    .goals-text { font-family: 'Lora', serif; font-size: 0.82rem; color: #2a5a8a; line-height: 1.45; }
-    .goals-empty { font-family: 'Lora', serif; font-style: italic; font-size: 0.8rem; color: #a8c8e0; text-align: center; padding: 4px 0; }
-    .goals-deco { position: absolute; top: -10px; right: -10px; width: 60px; height: 60px; border-radius: 50%; background: rgba(244,168,196,0.2); }
-    .goals-deco2 { position: absolute; bottom: -14px; left: 20px; width: 40px; height: 40px; border-radius: 50%; background: rgba(144,196,232,0.2); }
+    .goals-box-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; flex-shrink: 0; }
+    .goals-title { font-family: 'Dancing Script', cursive; font-size: 1.1rem; font-weight: 700; color: #1877F2; }
+    .goals-edit-hint { font-family: 'Lora', serif; font-style: italic; font-size: 0.62rem; color: #5a9ae0; }
+    .goals-list { overflow: hidden; flex: 1; }
+    .goals-item { display: flex; gap: 6px; align-items: baseline; margin-bottom: 3px; }
+    .goals-num { font-family: 'Dancing Script', cursive; font-size: 0.9rem; font-weight: 700; color: #1877F2; min-width: 16px; flex-shrink: 0; }
+    .goals-text { font-family: 'Lora', serif; font-size: 0.72rem; color: #1a3a6e; line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .goals-empty { font-family: 'Lora', serif; font-style: italic; font-size: 0.72rem; color: #7aaad8; text-align: center; padding: 4px 0; }
+    .goals-more { font-size: 0.62rem; color: #1877F2; font-style: italic; margin-top: 2px; }
+
+    /* TODO BOX */
+    .todo-box {
+      border-radius: 14px;
+      background: linear-gradient(135deg, #e8fff4, #d0f5e8);
+      border: 1.5px solid #2ecc87;
+      padding: 12px 14px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.12s;
+      height: 160px;
+      display: flex;
+      flex-direction: column;
+    }
+    .todo-box:active { transform: scale(0.98); }
+    .todo-box-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; flex-shrink: 0; }
+    .todo-title { font-family: 'Dancing Script', cursive; font-size: 1.1rem; font-weight: 700; color: #1aaa6e; }
+    .todo-edit-hint { font-family: 'Lora', serif; font-style: italic; font-size: 0.62rem; color: #5ad4a0; }
+    .todo-list { overflow: hidden; flex: 1; }
+    .todo-item { display: flex; gap: 6px; align-items: center; margin-bottom: 4px; }
+    .todo-check-sm { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid #2ecc87; background: white; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.5rem; }
+    .todo-check-sm.done { background: #2ecc87; border-color: #2ecc87; color: white; }
+    .todo-text-sm { font-family: 'Lora', serif; font-size: 0.72rem; color: #1a4a3a; line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+    .todo-text-sm.done { text-decoration: line-through; opacity: 0.5; }
+    .todo-empty { font-family: 'Lora', serif; font-style: italic; font-size: 0.72rem; color: #7ad4b0; text-align: center; padding: 4px 0; }
+    .todo-more { font-size: 0.62rem; color: #2ecc87; font-style: italic; margin-top: 2px; }
 
     /* DOW LABELS */
-    .dow-row { display: grid; grid-template-columns: repeat(7,1fr); background: #c8e4f4; border-bottom: 1.5px solid #b0d4ec; padding: 6px 8px; margin-top: 8px; }
-    .dow-cell { text-align: center; font-family: 'Lora', serif; font-style: italic; font-size: clamp(0.55rem,1.9vw,0.76rem); color: #3a7aaa; padding: 2px 0; }
+    .dow-row { display: grid; grid-template-columns: repeat(7,1fr); background: #1877F2; padding: 6px 8px; margin-top: 8px; }
+    .dow-cell { text-align: center; font-family: 'Lora', serif; font-style: italic; font-size: clamp(0.55rem,1.9vw,0.76rem); color: rgba(255,255,255,0.9); padding: 2px 0; }
 
-    /* CALENDAR GRID */
+    /* CALENDAR GRID — FIXED SIZE BOXES */
     .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 5px; padding: 8px; max-width: 700px; margin: 0 auto; }
-    .dc { background: #fafeff; border: 1.5px solid #b8daf4; border-radius: 10px; padding: 6px 7px; cursor: pointer; height: 80px; max-height: 80px; overflow: hidden; display: flex; flex-direction: column; position: relative; transition: transform 0.1s, background 0.12s; }
-    .dc:active { transform: scale(0.94); background: #e8f4ff; }
-    .dc.tdy { background: #e0f0ff; border-color: #5aaad8; box-shadow: 0 0 0 2px #90c4e844; }
-    .dc.emp { background: transparent; border: 1.5px dashed #cce4f4; opacity: 0.3; pointer-events: none; }
-    .dn { font-family: 'Dancing Script', cursive; font-size: 1.15rem; font-weight: 700; color: #4a90b8; line-height: 1; }
-    .dn.t { color: #2a70a0; }
-    .today-label { font-size: 0.44rem; font-style: italic; color: #2a70a0; margin-left: 3px; }
-    .task-preview { font-size: 0.58rem; color: #6a90a8; line-height: 1.5; margin-top: 3px; overflow: hidden; flex: 1; }
-    .task-preview-item { display: flex; gap: 3px; align-items: baseline; white-space: nowrap; overflow: hidden; }
-    .task-num-sm { color: #e87aaa; font-weight: 600; flex-shrink: 0; }
+    .dc {
+      background: #ffffff;
+      border: 1.5px solid #d0e4ff;
+      border-radius: 10px;
+      padding: 5px 6px;
+      cursor: pointer;
+      height: 78px !important;
+      max-height: 78px !important;
+      min-height: 78px !important;
+      overflow: hidden !important;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.1s, background 0.12s;
+    }
+    .dc:active { transform: scale(0.94); background: #e8f0ff; }
+    .dc.tdy { background: #e8f4ff; border-color: #1877F2; box-shadow: 0 0 0 2px #1877F244; }
+    .dc.emp { background: transparent; border: 1.5px dashed #d8eaff; opacity: 0.3; pointer-events: none; }
+    .dn { font-family: 'Dancing Script', cursive; font-size: 1.1rem; font-weight: 700; color: #1877F2; line-height: 1; flex-shrink: 0; }
+    .dn.t { color: #0a5ec9; }
+    .today-label { font-size: 0.42rem; font-style: italic; color: #0a5ec9; margin-left: 3px; }
+    .task-preview { font-size: 0.56rem; color: #4a6a9a; line-height: 1.4; margin-top: 2px; overflow: hidden !important; max-height: 50px !important; flex: 1; }
+    .task-preview-item { display: flex; gap: 2px; align-items: baseline; white-space: nowrap; overflow: hidden; }
+    .task-num-sm { color: #2ecc87; font-weight: 600; flex-shrink: 0; font-size: 0.54rem; }
     .task-text-sm { overflow: hidden; text-overflow: ellipsis; }
     .task-done-sm { text-decoration: line-through; opacity: 0.5; }
-    .more-tasks { color: #e87aaa; font-size: 0.55rem; }
-    .dot { position: absolute; bottom: 5px; right: 6px; width: 5px; height: 5px; border-radius: 50%; background: #f4a8c4; }
-    .cal-hint { text-align: center; font-family: 'Lora', serif; font-style: italic; font-size: 0.72rem; color: #7ab8d8; margin-top: 4px; opacity: 0.9; }
+    .more-tasks { color: #1877F2; font-size: 0.52rem; }
+    .dot { position: absolute; bottom: 4px; right: 5px; width: 5px; height: 5px; border-radius: 50%; background: #2ecc87; }
+    .cal-hint { text-align: center; font-family: 'Lora', serif; font-style: italic; font-size: 0.72rem; color: #1877F2; margin-top: 4px; opacity: 0.8; }
 
     /* LIST VIEW */
     .list-container { max-width: 600px; margin: 0 auto; padding: 6px 12px; }
-    .list-day-card { background: #fafeff; border: 1.5px solid #b8daf4; border-radius: 14px; margin-bottom: 9px; overflow: hidden; cursor: pointer; }
-    .list-day-card:active { background: #eef8ff; }
-    .list-day-header { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px 9px; }
-    .list-day-name { font-family: 'Dancing Script', cursive; font-size: 1.2rem; font-weight: 700; color: #4a90b8; }
-    .list-day-name.t { color: #2a70a0; }
-    .list-day-date { font-family: 'Lora', serif; font-style: italic; font-size: 0.7rem; color: #90b8d0; }
-    .list-task-count { font-size: 0.7rem; color: #e87aaa; font-style: italic; font-family: 'Lora', serif; }
-    .list-task-area { padding: 0 16px 11px; }
+    .list-day-card { background: #ffffff; border: 1.5px solid #d0e4ff; border-radius: 14px; margin-bottom: 9px; overflow: hidden; cursor: pointer; }
+    .list-day-card:active { background: #f0f6ff; }
+    .list-day-header { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px 9px; border-bottom: 1px solid #e8f0ff; }
+    .list-day-name { font-family: 'Dancing Script', cursive; font-size: 1.2rem; font-weight: 700; color: #1877F2; }
+    .list-day-name.t { color: #0a5ec9; }
+    .list-day-date { font-family: 'Lora', serif; font-style: italic; font-size: 0.7rem; color: #7aaad8; }
+    .list-task-count { font-size: 0.7rem; color: #2ecc87; font-style: italic; font-family: 'Lora', serif; font-weight: 600; }
+    .list-task-area { padding: 8px 16px 11px; }
     .list-task-row { display: flex; gap: 10px; align-items: center; padding: 3px 0; }
-    .list-task-num { font-family: 'Dancing Script', cursive; font-size: 1rem; color: #e87aaa; font-weight: 700; min-width: 18px; }
-    .list-task-text { font-family: 'Lora', serif; font-size: 0.84rem; color: #2a4a6a; line-height: 1.5; }
+    .list-task-num { font-family: 'Dancing Script', cursive; font-size: 1rem; color: #2ecc87; font-weight: 700; min-width: 18px; }
+    .list-task-text { font-family: 'Lora', serif; font-size: 0.84rem; color: #1a3a6e; line-height: 1.5; }
     .list-task-text.done { text-decoration: line-through; opacity: 0.5; }
-    .list-empty { font-family: 'Lora', serif; font-style: italic; font-size: 0.76rem; color: #b0cce0; padding: 0 16px 11px; }
-    .list-note-preview { font-family: 'Lora', serif; font-style: italic; font-size: 0.76rem; color: #7aaac0; padding: 0 16px 11px; border-top: 1px dashed #cce4f4; margin-top: 4px; padding-top: 8px; }
+    .list-empty { font-family: 'Lora', serif; font-style: italic; font-size: 0.76rem; color: #a0c4e8; padding: 0 16px 11px; }
+    .list-note-preview { font-family: 'Lora', serif; font-style: italic; font-size: 0.76rem; color: #5a9ad8; padding: 6px 16px 10px; border-top: 1px dashed #d0e4ff; }
 
-    /* MODAL — fixed position, won't move with keyboard */
-    .ov { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(20,50,90,0.38); z-index: 200; display: flex; align-items: flex-end; justify-content: center; animation: fi 0.2s ease; }
+    /* MODAL */
+    .ov { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10,40,90,0.4); z-index: 200; display: flex; align-items: flex-end; justify-content: center; animation: fi 0.2s ease; }
     @keyframes fi { from { opacity: 0 } to { opacity: 1 } }
     @keyframes su { from { transform: translateY(80px); opacity: 0 } to { transform: translateY(0); opacity: 1 } }
-    .mc { background: #fafeff; border-radius: 24px 24px 0 0; width: 100%; max-width: 620px; box-shadow: 0 -8px 40px rgba(60,120,180,0.15); animation: su 0.28s ease; display: flex; flex-direction: column; height: 70vh; position: relative; }
-    .mh-day { background: linear-gradient(135deg,#7dc4e8,#5aaad0); border-radius: 24px 24px 0 0; padding: 14px 18px 12px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-    .mh-goals { background: linear-gradient(135deg,#f4a8c4,#e87aaa); border-radius: 24px 24px 0 0; padding: 14px 18px 12px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .mc { background: #ffffff; border-radius: 24px 24px 0 0; width: 100%; max-width: 620px; box-shadow: 0 -8px 40px rgba(24,119,242,0.2); animation: su 0.28s ease; display: flex; flex-direction: column; height: 72vh; }
+
+    /* DAY MODAL HEADER */
+    .mh-day { background: linear-gradient(135deg,#1877F2,#0a5ec9); border-radius: 24px 24px 0 0; padding: 14px 18px 12px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    /* GOALS MODAL HEADER */
+    .mh-goals { background: linear-gradient(135deg,#1877F2,#0a5ec9); border-radius: 24px 24px 0 0; padding: 14px 18px 12px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    /* TODO MODAL HEADER */
+    .mh-todo { background: linear-gradient(135deg,#2ecc87,#1aaa6e); border-radius: 24px 24px 0 0; padding: 14px 18px 12px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+
     .mdn { font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #fff; font-weight: 700; line-height: 1; }
-    .mds { font-family: 'Lora', serif; font-style: italic; font-size: 0.72rem; color: rgba(255,255,255,0.8); margin-top: 2px; }
+    .mds { font-family: 'Lora', serif; font-style: italic; font-size: 0.72rem; color: rgba(255,255,255,0.85); margin-top: 2px; }
     .sbtn { background: #fff; border: none; border-radius: 22px; padding: 8px 18px; font-family: 'Lora', serif; font-size: 0.88rem; font-weight: 600; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); flex-shrink: 0; }
-    .sbtn-day { color: #4a90b8; }
-    .sbtn-goals { color: #e87aaa; }
+    .sbtn-day { color: #1877F2; }
+    .sbtn-goals { color: #1877F2; }
+    .sbtn-todo { color: #1aaa6e; }
     .sbtn:active { transform: scale(0.96); }
 
-    /* TABS inside modal */
-    .modal-tabs { display: flex; background: #f0f8ff; flex-shrink: 0; border-bottom: 1.5px solid #d0e8f8; }
-    .modal-tab { flex: 1; padding: 9px; text-align: center; font-family: 'Lora', serif; font-size: 0.8rem; color: #7ab8d8; cursor: pointer; border-bottom: 2.5px solid transparent; transition: all 0.15s; }
-    .modal-tab.active { color: #4a90b8; border-bottom-color: #4a90b8; font-weight: 600; background: #fafeff; }
+    /* MODAL TABS */
+    .modal-tabs { display: flex; background: #f0f6ff; flex-shrink: 0; border-bottom: 1.5px solid #d0e4ff; }
+    .modal-tab { flex: 1; padding: 9px; text-align: center; font-family: 'Lora', serif; font-size: 0.8rem; color: #7aaad8; cursor: pointer; border-bottom: 2.5px solid transparent; transition: all 0.15s; }
+    .modal-tab.active { color: #1877F2; border-bottom-color: #1877F2; font-weight: 600; background: #fff; }
 
     .task-list-scroll { flex: 1; overflow-y: auto; padding: 14px 18px 8px; -webkit-overflow-scrolling: touch; }
 
-    /* TASK ROWS with checkbox */
+    /* TASK ROWS */
     .task-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-    .task-number-day { font-family: 'Dancing Script', cursive; font-size: 1.3rem; font-weight: 700; color: #7dc4e8; min-width: 24px; line-height: 1; padding-top: 2px; flex-shrink: 0; }
-    .task-number-goal { font-family: 'Dancing Script', cursive; font-size: 1.3rem; font-weight: 700; color: #f4a8c4; min-width: 24px; line-height: 1; padding-top: 2px; flex-shrink: 0; }
+    .task-number-day { font-family: 'Dancing Script', cursive; font-size: 1.3rem; font-weight: 700; color: #1877F2; min-width: 24px; line-height: 1; padding-top: 2px; flex-shrink: 0; }
+    .task-number-goal { font-family: 'Dancing Script', cursive; font-size: 1.3rem; font-weight: 700; color: #1877F2; min-width: 24px; line-height: 1; padding-top: 2px; flex-shrink: 0; }
+    .task-number-todo { font-family: 'Dancing Script', cursive; font-size: 1.3rem; font-weight: 700; color: #2ecc87; min-width: 24px; line-height: 1; padding-top: 2px; flex-shrink: 0; }
 
-    /* CHECKBOX */
-    .task-check { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #90c4e8; background: white; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
-    .task-check.checked { background: linear-gradient(135deg,#90c4e8,#f4a8c4); border-color: transparent; }
-    .task-check.checked::after { content: '✓'; color: white; font-size: 0.7rem; font-weight: bold; }
+    /* CHECKBOXES */
+    .task-check { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #1877F2; background: white; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+    .task-check.checked { background: #1877F2; border-color: #1877F2; }
+    .task-check.checked::after { content: '✓'; color: white; font-size: 0.72rem; font-weight: bold; }
+    .task-check-todo { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #2ecc87; background: white; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+    .task-check-todo.checked { background: #2ecc87; border-color: #2ecc87; }
+    .task-check-todo.checked::after { content: '✓'; color: white; font-size: 0.72rem; font-weight: bold; }
 
-    .task-input-day { flex: 1; border: none; border-bottom: 1.5px solid #c4e0f4; background: transparent; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #2a4a6a; outline: none; padding: 4px 2px; line-height: 1.5; width: 100%; }
+    /* INPUTS */
+    .task-input-day { flex: 1; border: none; border-bottom: 1.5px solid #d0e4ff; background: transparent; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #1a3a6e; outline: none; padding: 4px 2px; line-height: 1.5; width: 100%; }
     .task-input-day.done-input { text-decoration: line-through; opacity: 0.5; }
-    .task-input-day::placeholder { color: #a8cce0; font-style: italic; }
-    .task-input-day:focus { border-bottom-color: #7dc4e8; }
-    .task-input-goals { flex: 1; border: none; border-bottom: 1.5px solid #f8d0e0; background: transparent; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #6a2a4a; outline: none; padding: 4px 2px; line-height: 1.5; width: 100%; }
-    .task-input-goals::placeholder { color: #f0b8cc; font-style: italic; }
-    .task-input-goals:focus { border-bottom-color: #e87aaa; }
+    .task-input-day::placeholder { color: #a0c4e8; font-style: italic; }
+    .task-input-day:focus { border-bottom-color: #1877F2; }
+    .task-input-goals { flex: 1; border: none; border-bottom: 1.5px solid #d0e4ff; background: transparent; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #1a3a6e; outline: none; padding: 4px 2px; line-height: 1.5; width: 100%; }
+    .task-input-goals::placeholder { color: #a0c4e8; font-style: italic; }
+    .task-input-goals:focus { border-bottom-color: #1877F2; }
+    .task-input-todo { flex: 1; border: none; border-bottom: 1.5px solid #c0f0dc; background: transparent; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #1a4a3a; outline: none; padding: 4px 2px; line-height: 1.5; width: 100%; }
+    .task-input-todo.done-input { text-decoration: line-through; opacity: 0.5; }
+    .task-input-todo::placeholder { color: #7ad4b0; font-style: italic; }
+    .task-input-todo:focus { border-bottom-color: #2ecc87; }
 
-    /* NOTES AREA */
+    /* NOTES */
     .notes-area { flex: 1; display: flex; flex-direction: column; padding: 14px 18px; }
-    .notes-label { font-family: 'Dancing Script', cursive; font-size: 1.1rem; color: #7dc4e8; margin-bottom: 8px; }
-    .notes-textarea { flex: 1; border: 1.5px solid #c4e0f4; border-radius: 12px; background: #f5faff; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #2a4a6a; outline: none; padding: 12px; line-height: 1.7; resize: none; min-height: 160px; -webkit-overflow-scrolling: touch; }
-    .notes-textarea::placeholder { color: #a8cce0; font-style: italic; }
-    .notes-textarea:focus { border-color: #7dc4e8; }
+    .notes-label { font-family: 'Dancing Script', cursive; font-size: 1.1rem; color: #1877F2; margin-bottom: 8px; }
+    .notes-textarea { flex: 1; border: 1.5px solid #d0e4ff; border-radius: 12px; background: #f8fbff; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #1a3a6e; outline: none; padding: 12px; line-height: 1.7; resize: none; min-height: 160px; -webkit-overflow-scrolling: touch; }
+    .notes-textarea::placeholder { color: #a0c4e8; font-style: italic; }
+    .notes-textarea:focus { border-color: #1877F2; }
 
-    .modal-hint { text-align: center; font-size: 0.68rem; color: #a0b8c8; font-style: italic; padding: 4px 20px 10px; flex-shrink: 0; }
+    .modal-hint { text-align: center; font-size: 0.68rem; color: #7aaad8; font-style: italic; padding: 4px 20px 10px; flex-shrink: 0; }
     .hidden { display: none; }
   </style>
 </head>
@@ -151,17 +227,31 @@
     <button class="tog-btn" id="btn-list" onclick="switchView('list')">📋 List</button>
   </div>
 
-  <!-- GOALS BOX -->
-  <div class="goals-box" onclick="openGoals()">
-    <div class="goals-deco"></div>
-    <div class="goals-deco2"></div>
-    <div class="goals-box-header">
-      <div class="goals-title">🌸 My March Goals</div>
-      <div class="goals-edit-hint" id="goals-hint">tap to add</div>
+  <!-- TOP BOXES: GOALS + TODO SIDE BY SIDE -->
+  <div class="top-boxes">
+
+    <!-- GOALS BOX -->
+    <div class="goals-box" onclick="openGoals()">
+      <div class="goals-box-header">
+        <div class="goals-title">🎯 Goals</div>
+        <div class="goals-edit-hint" id="goals-hint">tap to add</div>
+      </div>
+      <div class="goals-list" id="goals-display">
+        <div class="goals-empty">Add your March goals ✨</div>
+      </div>
     </div>
-    <div id="goals-display">
-      <div class="goals-empty">What do you want to achieve this month? ✨</div>
+
+    <!-- TODO BOX -->
+    <div class="todo-box" onclick="openTodo()">
+      <div class="todo-box-header">
+        <div class="todo-title">✅ To Do</div>
+        <div class="todo-edit-hint" id="todo-hint">tap to add</div>
+      </div>
+      <div class="todo-list" id="todo-display">
+        <div class="todo-empty">Add your to-dos ✨</div>
+      </div>
     </div>
+
   </div>
 
   <!-- CALENDAR VIEW -->
@@ -190,22 +280,15 @@
         </div>
         <button class="sbtn sbtn-day" onclick="closeDay()">Save ✓</button>
       </div>
-
-      <!-- TABS -->
       <div class="modal-tabs">
         <div class="modal-tab active" id="tab-tasks" onclick="switchTab('tasks')">✅ Tasks</div>
         <div class="modal-tab" id="tab-notes" onclick="switchTab('notes')">📝 Notes</div>
       </div>
-
-      <!-- TASKS TAB -->
       <div id="panel-tasks" class="task-list-scroll"></div>
-
-      <!-- NOTES TAB -->
       <div id="panel-notes" class="notes-area hidden">
         <div class="notes-label">📝 Notes for the day</div>
         <textarea class="notes-textarea" id="notes-textarea" placeholder="Write anything — thoughts, reminders, ideas…"></textarea>
       </div>
-
       <div class="modal-hint" id="modal-hint-text">Enter = new task · Tap circle to tick off · Save when done</div>
     </div>
   </div>
@@ -215,7 +298,7 @@
     <div class="mc" onclick="event.stopPropagation()">
       <div class="mh-goals">
         <div>
-          <div class="mdn">🌸 My March Goals</div>
+          <div class="mdn">🎯 My March Goals</div>
           <div class="mds">Press Enter to add a new goal</div>
         </div>
         <button class="sbtn sbtn-goals" onclick="closeGoals()">Save ✓</button>
@@ -225,30 +308,53 @@
     </div>
   </div>
 
-<script>
-  const DAY_NAMES = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-  const STORAGE_KEY  = "march2026_tasks_v4";
-  const DONE_KEY     = "march2026_done_v4";
-  const GOALS_KEY    = "march2026_goals_v4";
-  const NOTES_KEY    = "march2026_notes_v4";
+  <!-- TODO MODAL -->
+  <div class="ov hidden" id="todo-modal" onclick="closeTodo()">
+    <div class="mc" onclick="event.stopPropagation()">
+      <div class="mh-todo">
+        <div>
+          <div class="mdn">✅ My To Do List</div>
+          <div class="mds">Press Enter to add a new item</div>
+        </div>
+        <button class="sbtn sbtn-todo" onclick="closeTodo()">Save ✓</button>
+      </div>
+      <div class="task-list-scroll" id="todo-task-list"></div>
+      <div class="modal-hint">Enter = new item · Tap circle to tick off · Save when done</div>
+    </div>
+  </div>
 
-  let tasks = {};
-  let done  = {};
-  let goals = [];
-  let notes = {};
+<script>
+  const DAY_NAMES    = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const STORAGE_KEY  = "march2026_tasks_v5";
+  const DONE_KEY     = "march2026_done_v5";
+  const GOALS_KEY    = "march2026_goals_v5";
+  const NOTES_KEY    = "march2026_notes_v5";
+  const TODO_KEY     = "march2026_todo_v5";
+  const TODONE_KEY   = "march2026_todone_v5";
+
+  let tasks   = {};
+  let done    = {};
+  let goals   = [];
+  let notes   = {};
+  let todoItems = [];
+  let todoDone  = {};
   let currentDay  = null;
   let currentView = "calendar";
   let currentTab  = "tasks";
 
-  try { tasks = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch {}
-  try { done  = JSON.parse(localStorage.getItem(DONE_KEY))    || {}; } catch {}
-  try { goals = JSON.parse(localStorage.getItem(GOALS_KEY))   || []; } catch {}
-  try { notes = JSON.parse(localStorage.getItem(NOTES_KEY))   || {}; } catch {}
+  try { tasks     = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch {}
+  try { done      = JSON.parse(localStorage.getItem(DONE_KEY))    || {}; } catch {}
+  try { goals     = JSON.parse(localStorage.getItem(GOALS_KEY))   || []; } catch {}
+  try { notes     = JSON.parse(localStorage.getItem(NOTES_KEY))   || {}; } catch {}
+  try { todoItems = JSON.parse(localStorage.getItem(TODO_KEY))    || []; } catch {}
+  try { todoDone  = JSON.parse(localStorage.getItem(TODONE_KEY))  || {}; } catch {}
 
-  function saveTasks() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks)); } catch {} }
-  function saveDone()  { try { localStorage.setItem(DONE_KEY,    JSON.stringify(done));  } catch {} }
-  function saveGoals() { try { localStorage.setItem(GOALS_KEY,   JSON.stringify(goals)); } catch {} }
-  function saveNotes() { try { localStorage.setItem(NOTES_KEY,   JSON.stringify(notes)); } catch {} }
+  function saveTasks()    { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));     } catch {} }
+  function saveDone()     { try { localStorage.setItem(DONE_KEY,    JSON.stringify(done));      } catch {} }
+  function saveGoals()    { try { localStorage.setItem(GOALS_KEY,   JSON.stringify(goals));     } catch {} }
+  function saveNotes()    { try { localStorage.setItem(NOTES_KEY,   JSON.stringify(notes));     } catch {} }
+  function saveTodo()     { try { localStorage.setItem(TODO_KEY,    JSON.stringify(todoItems)); } catch {} }
+  function saveTodoDone() { try { localStorage.setItem(TODONE_KEY,  JSON.stringify(todoDone));  } catch {} }
 
   const today = new Date();
   function isToday(d) { return today.getFullYear()===2026 && today.getMonth()===2 && today.getDate()===d; }
@@ -274,9 +380,7 @@
     document.getElementById('panel-tasks').classList.toggle('hidden', tab !== 'tasks');
     document.getElementById('panel-notes').classList.toggle('hidden', tab !== 'notes');
     document.getElementById('modal-hint-text').classList.toggle('hidden', tab !== 'tasks');
-    if (tab === 'notes') {
-      setTimeout(() => document.getElementById('notes-textarea').focus(), 100);
-    }
+    if (tab === 'notes') setTimeout(() => document.getElementById('notes-textarea').focus(), 100);
   }
 
   // ── CALENDAR ──
@@ -315,7 +419,8 @@
           const row = document.createElement('div');
           row.className = 'task-preview-item';
           const isDone = dayDone[i];
-          row.innerHTML = `<span class="task-num-sm">${isDone ? '✓' : (i+1)+'.'}</span><span class="task-text-sm${isDone?' task-done-sm':''}">${t}</span>`;
+          row.innerHTML = `<span class="task-num-sm">${isDone?'✓':(i+1)+'.'}
+          </span><span class="task-text-sm${isDone?' task-done-sm':''}">${t}</span>`;
           preview.appendChild(row);
         });
         if (dayTasks.length > 3) {
@@ -347,40 +452,29 @@
       const tod = isToday(day);
       const doneCount = Object.values(dayDone).filter(Boolean).length;
 
-      let tasksHtml = '';
-      if (dayTasks.length > 0) {
-        tasksHtml = `<div class="list-task-area">${dayTasks.map((t,i) => {
-          const isDone = dayDone[i];
-          return `<div class="list-task-row">
-            <span class="list-task-num">${isDone ? '✓' : (i+1)+'.'}
-            </span><span class="list-task-text${isDone?' done':''}">${t}</span>
-          </div>`;
-        }).join('')}</div>`;
-      } else {
-        tasksHtml = `<div class="list-empty">No tasks yet…</div>`;
-      }
+      let tasksHtml = dayTasks.length > 0
+        ? `<div class="list-task-area">${dayTasks.map((t,i) => {
+            const isDone = dayDone[i];
+            return `<div class="list-task-row"><span class="list-task-num">${isDone?'✓':(i+1)+'.'}</span><span class="list-task-text${isDone?' done':''}">${t}</span></div>`;
+          }).join('')}</div>`
+        : `<div class="list-empty">No tasks yet…</div>`;
 
-      let noteHtml = '';
-      if (dayNote.trim()) {
-        noteHtml = `<div class="list-note-preview">📝 ${dayNote.substring(0,80)}${dayNote.length>80?'…':''}</div>`;
-      }
+      let noteHtml = dayNote.trim()
+        ? `<div class="list-note-preview">📝 ${dayNote.substring(0,80)}${dayNote.length>80?'…':''}</div>`
+        : '';
 
       card.innerHTML = `
         <div class="list-day-header">
           <div>
             <div class="list-day-name${tod?' t':''}">
               ${DAY_NAMES[dow]}, March ${day}
-              ${tod ? '<span style="font-size:0.48rem;font-style:italic;margin-left:6px;color:#2a70a0">today</span>' : ''}
+              ${tod?'<span style="font-size:0.48rem;font-style:italic;margin-left:6px;color:#0a5ec9">today</span>':''}
             </div>
             <div class="list-day-date">2026</div>
           </div>
-          <div class="list-task-count">
-            ${dayTasks.length > 0 ? `${doneCount}/${dayTasks.length} done` : 'tap to add'}
-          </div>
+          <div class="list-task-count">${dayTasks.length>0?`${doneCount}/${dayTasks.length} done`:'tap to add'}</div>
         </div>
-        ${tasksHtml}
-        ${noteHtml}
-      `;
+        ${tasksHtml}${noteHtml}`;
       container.appendChild(card);
     });
   }
@@ -388,22 +482,45 @@
   // ── GOALS DISPLAY ──
   function renderGoalsDisplay() {
     const display = document.getElementById('goals-display');
-    const hint = document.getElementById('goals-hint');
+    const hint    = document.getElementById('goals-hint');
     if (goals.length === 0) {
-      display.innerHTML = '<div class="goals-empty">What do you want to achieve this month? ✨</div>';
+      display.innerHTML = '<div class="goals-empty">Add your March goals ✨</div>';
       hint.textContent = 'tap to add';
     } else {
-      display.innerHTML = '<div class="goals-list">' +
-        goals.map((g,i) => `<div class="goals-item"><span class="goals-num">${i+1}.</span><span class="goals-text">${g}</span></div>`).join('') +
-        '</div>';
+      const shown = goals.slice(0,4);
+      const extra = goals.length - shown.length;
+      display.innerHTML = shown.map((g,i) =>
+        `<div class="goals-item"><span class="goals-num">${i+1}.</span><span class="goals-text">${g}</span></div>`
+      ).join('') + (extra > 0 ? `<div class="goals-more">+${extra} more</div>` : '');
+      hint.textContent = 'tap to edit';
+    }
+  }
+
+  // ── TODO DISPLAY ──
+  function renderTodoDisplay() {
+    const display = document.getElementById('todo-display');
+    const hint    = document.getElementById('todo-hint');
+    if (todoItems.length === 0) {
+      display.innerHTML = '<div class="todo-empty">Add your to-dos ✨</div>';
+      hint.textContent = 'tap to add';
+    } else {
+      const shown = todoItems.slice(0,4);
+      const extra = todoItems.length - shown.length;
+      display.innerHTML = shown.map((t,i) => {
+        const isDone = todoDone[i] || false;
+        return `<div class="todo-item">
+          <div class="todo-check-sm${isDone?' done':''}">${isDone?'✓':''}</div>
+          <span class="todo-text-sm${isDone?' done':''}">${t}</span>
+        </div>`;
+      }).join('') + (extra > 0 ? `<div class="todo-more">+${extra} more</div>` : '');
       hint.textContent = 'tap to edit';
     }
   }
 
   // ── UPDATE DONE SUBTITLE ──
   function updateDoneSubtitle() {
-    const dayTasks = tasks[currentDay] || [];
-    const dayDone  = done[currentDay]  || {};
+    const dayTasks  = tasks[currentDay] || [];
+    const dayDone   = done[currentDay]  || {};
     const doneCount = Object.values(dayDone).filter(Boolean).length;
     document.getElementById('modal-day-sub').textContent =
       dayTasks.length > 0 ? `${doneCount} of ${dayTasks.length} completed` : 'tap + to add tasks';
@@ -416,13 +533,9 @@
     const d = march[day-1];
     document.getElementById('modal-day-title').textContent = `${DAY_NAMES[d.dow]}, March ${day}`;
     document.getElementById('notes-textarea').value = notes[day] || '';
-
-    // reset tabs
     switchTab('tasks');
-
     renderTaskInputs(tasks[day] || [], 'panel-tasks', 'day');
     updateDoneSubtitle();
-
     document.getElementById('day-modal').classList.remove('hidden');
     setTimeout(() => {
       const first = document.querySelector('#panel-tasks .task-input-day');
@@ -431,24 +544,18 @@
   }
 
   function closeDay() {
-    // Save tasks
     const inputs = document.querySelectorAll('#panel-tasks .task-input-day');
-    const vals = Array.from(inputs).map(i => i.value.trim()).filter(Boolean);
-    tasks[currentDay] = vals;
+    tasks[currentDay] = Array.from(inputs).map(i => i.value.trim()).filter(Boolean);
     saveTasks();
-
-    // Save notes
     notes[currentDay] = document.getElementById('notes-textarea').value;
     saveNotes();
-
     document.getElementById('day-modal').classList.add('hidden');
     currentView === 'list' ? renderList() : renderCalendar();
   }
 
   // ── GOALS MODAL ──
   function openGoals() {
-    const existing = goals.length > 0 ? [...goals, ''] : [''];
-    renderTaskInputs(existing, 'goals-task-list', 'goals');
+    renderTaskInputs(goals.length > 0 ? [...goals, ''] : [''], 'goals-task-list', 'goals');
     document.getElementById('goals-modal').classList.remove('hidden');
     setTimeout(() => {
       const first = document.querySelector('#goals-task-list .task-input-goals');
@@ -458,54 +565,78 @@
 
   function closeGoals() {
     const inputs = document.querySelectorAll('#goals-task-list .task-input-goals');
-    const vals = Array.from(inputs).map(i => i.value.trim()).filter(Boolean);
-    goals = vals;
+    goals = Array.from(inputs).map(i => i.value.trim()).filter(Boolean);
     saveGoals();
     document.getElementById('goals-modal').classList.add('hidden');
     renderGoalsDisplay();
   }
 
-  // ── RENDER TASK INPUTS ──
+  // ── TODO MODAL ──
+  function openTodo() {
+    renderTaskInputs(todoItems.length > 0 ? [...todoItems, ''] : [''], 'todo-task-list', 'todo');
+    document.getElementById('todo-modal').classList.remove('hidden');
+    setTimeout(() => {
+      const first = document.querySelector('#todo-task-list .task-input-todo');
+      if (first) first.focus();
+    }, 180);
+  }
+
+  function closeTodo() {
+    const inputs = document.querySelectorAll('#todo-task-list .task-input-todo');
+    todoItems = Array.from(inputs).map(i => i.value.trim()).filter(Boolean);
+    saveTodo();
+    document.getElementById('todo-modal').classList.add('hidden');
+    renderTodoDisplay();
+  }
+
+  // ── RENDER INPUTS ──
   function renderTaskInputs(items, containerId, type) {
     const container = document.getElementById(containerId);
     container.innerHTML = '';
-
-    // Show items + one empty line at end
-    const displayItems = [...items, ''];
+    const displayItems = [...items];
+    if (displayItems[displayItems.length-1] !== '') displayItems.push('');
 
     displayItems.forEach((val, idx) => {
       const row = document.createElement('div');
       row.className = 'task-row';
 
       const num = document.createElement('div');
-      num.className = type === 'day' ? 'task-number-day' : 'task-number-goal';
+      num.className = type === 'todo' ? 'task-number-todo' : (type === 'day' ? 'task-number-day' : 'task-number-goal');
       num.textContent = (idx+1) + '.';
 
+      const inputClass = type === 'day' ? 'task-input-day' : (type === 'goals' ? 'task-input-goals' : 'task-input-todo');
       const input = document.createElement('input');
       input.type = 'text';
-      input.className = type === 'day' ? 'task-input-day' : 'task-input-goals';
+      input.className = inputClass;
       input.value = val;
       input.placeholder = idx === 0
-        ? (type === 'day' ? 'What are you doing today?' : 'What do you want to achieve this month?')
-        : (type === 'day' ? 'Next task…' : 'Another goal…');
+        ? (type === 'day' ? 'What are you doing today?' : (type === 'goals' ? 'What do you want to achieve?' : 'Add a to-do item…'))
+        : (type === 'day' ? 'Next task…' : (type === 'goals' ? 'Another goal…' : 'Next item…'));
 
-      // Checkbox only for day tasks
-      if (type === 'day' && val.trim() !== '') {
-        const dayDone = done[currentDay] || {};
-        const isDone = dayDone[idx] || false;
-
+      // Checkbox for day tasks and todo items
+      if ((type === 'day' || type === 'todo') && val.trim() !== '') {
+        const doneObj = type === 'day' ? (done[currentDay] || {}) : todoDone;
+        const isDone  = doneObj[idx] || false;
+        const checkClass = type === 'todo' ? 'task-check-todo' : 'task-check';
         const check = document.createElement('div');
-        check.className = 'task-check' + (isDone ? ' checked' : '');
+        check.className = checkClass + (isDone ? ' checked' : '');
         check.onclick = (e) => {
           e.stopPropagation();
-          if (!done[currentDay]) done[currentDay] = {};
-          done[currentDay][idx] = !done[currentDay][idx];
-          saveDone();
-          check.classList.toggle('checked', done[currentDay][idx]);
-          input.classList.toggle('done-input', done[currentDay][idx]);
-          updateDoneSubtitle();
+          if (type === 'day') {
+            if (!done[currentDay]) done[currentDay] = {};
+            done[currentDay][idx] = !done[currentDay][idx];
+            saveDone();
+            check.classList.toggle('checked', done[currentDay][idx]);
+            input.classList.toggle('done-input', done[currentDay][idx]);
+            updateDoneSubtitle();
+          } else {
+            todoDone[idx] = !todoDone[idx];
+            saveTodoDone();
+            check.classList.toggle('checked', todoDone[idx]);
+            input.classList.toggle('done-input', todoDone[idx]);
+            renderTodoDisplay();
+          }
         };
-
         if (isDone) input.classList.add('done-input');
         row.appendChild(num);
         row.appendChild(check);
@@ -516,14 +647,14 @@
       }
 
       input.addEventListener('keydown', (e) => {
-        const sel = type==='day' ? '.task-input-day' : '.task-input-goals';
+        const sel = `.${inputClass}`;
         const allInputs = container.querySelectorAll(sel);
         const currentIdx = Array.from(allInputs).indexOf(e.target);
         if (e.key === 'Enter') {
           e.preventDefault();
           const vals = Array.from(allInputs).map(i => i.value);
           vals.splice(currentIdx+1, 0, '');
-          renderTaskInputs(vals.filter((_,i) => i < vals.length-1), containerId, type);
+          renderTaskInputs(vals.slice(0, vals.length-1), containerId, type);
           const newInputs = container.querySelectorAll(sel);
           if (newInputs[currentIdx+1]) newInputs[currentIdx+1].focus();
         } else if (e.key === 'Backspace' && e.target.value === '') {
@@ -532,10 +663,9 @@
             e.preventDefault();
             const vals = Array.from(allI).map(i => i.value);
             vals.splice(currentIdx, 1);
-            renderTaskInputs(vals.filter((_,i) => i < vals.length), containerId, type);
+            renderTaskInputs(vals.slice(0, vals.length), containerId, type);
             const newInputs = container.querySelectorAll(sel);
-            const focusIdx = Math.max(0, currentIdx-1);
-            if (newInputs[focusIdx]) newInputs[focusIdx].focus();
+            if (newInputs[Math.max(0,currentIdx-1)]) newInputs[Math.max(0,currentIdx-1)].focus();
           }
         }
       });
@@ -547,6 +677,7 @@
   // ── INIT ──
   renderCalendar();
   renderGoalsDisplay();
+  renderTodoDisplay();
 </script>
 </body>
 </html>
