@@ -1,1 +1,552 @@
-https://sushilanahar.github.io/my-march-calendar
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="My March" />
+  <title>My March 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #eef6ff 0%, #fce8f0 50%, #e8f4ff 100%);
+      font-family: 'Lora', 'Georgia', serif;
+      padding-bottom: 48px;
+      overflow-x: hidden;
+    }
+
+    /* HEADER */
+    .header { background: linear-gradient(135deg, #7dc4e8 0%, #f4a8c4 100%); padding: 26px 20px 18px; text-align: center; box-shadow: 0 4px 20px rgba(80,140,200,0.18); }
+    .header-dots { color: rgba(255,255,255,0.7); letter-spacing: 16px; font-size: 0.72rem; margin-bottom: 6px; }
+    .header-month { font-family: 'Dancing Script', cursive; font-size: clamp(2.2rem,9vw,3.2rem); color: #fff; font-weight: 700; letter-spacing: 2px; text-shadow: 0 2px 14px rgba(60,100,160,0.18); line-height: 1; }
+    .header-year { font-family: 'Lora', serif; font-size: 0.88rem; color: rgba(255,255,255,0.85); font-style: italic; letter-spacing: 5px; margin-top: 6px; }
+
+    /* TOGGLE */
+    .toggle-bar { display: flex; justify-content: center; padding: 12px 20px 4px; }
+    .tog-btn { padding: 8px 26px; font-family: 'Lora', serif; font-size: 0.84rem; border: 1.5px solid #90c4e8; background: transparent; color: #4a90b8; cursor: pointer; transition: all 0.15s; }
+    .tog-btn:first-child { border-radius: 22px 0 0 22px; }
+    .tog-btn:last-child { border-radius: 0 22px 22px 0; }
+    .tog-btn.active { background: linear-gradient(135deg,#90c4e8,#f4a8c4); color: #fff; font-weight: 600; border-color: transparent; }
+
+    /* GOALS BOX */
+    .goals-box { margin: 12px 12px 4px; border-radius: 16px; background: linear-gradient(135deg,#daeeff,#fce0ec); border: 1.5px solid #b8daf4; padding: 14px 16px; cursor: pointer; position: relative; overflow: hidden; transition: transform 0.12s; }
+    .goals-box:active { transform: scale(0.98); }
+    .goals-box-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .goals-title { font-family: 'Dancing Script', cursive; font-size: 1.3rem; font-weight: 700; color: #3a7abf; }
+    .goals-edit-hint { font-family: 'Lora', serif; font-style: italic; font-size: 0.68rem; color: #a0b8d0; }
+    .goals-list { padding: 0; }
+    .goals-item { display: flex; gap: 8px; align-items: baseline; margin-bottom: 4px; }
+    .goals-num { font-family: 'Dancing Script', cursive; font-size: 1rem; font-weight: 700; color: #e87aaa; min-width: 18px; }
+    .goals-text { font-family: 'Lora', serif; font-size: 0.82rem; color: #2a5a8a; line-height: 1.45; }
+    .goals-empty { font-family: 'Lora', serif; font-style: italic; font-size: 0.8rem; color: #a8c8e0; text-align: center; padding: 4px 0; }
+    .goals-deco { position: absolute; top: -10px; right: -10px; width: 60px; height: 60px; border-radius: 50%; background: rgba(244,168,196,0.2); }
+    .goals-deco2 { position: absolute; bottom: -14px; left: 20px; width: 40px; height: 40px; border-radius: 50%; background: rgba(144,196,232,0.2); }
+
+    /* DOW LABELS */
+    .dow-row { display: grid; grid-template-columns: repeat(7,1fr); background: #c8e4f4; border-bottom: 1.5px solid #b0d4ec; padding: 6px 8px; margin-top: 8px; }
+    .dow-cell { text-align: center; font-family: 'Lora', serif; font-style: italic; font-size: clamp(0.55rem,1.9vw,0.76rem); color: #3a7aaa; padding: 2px 0; }
+
+    /* CALENDAR GRID */
+    .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 5px; padding: 8px; max-width: 700px; margin: 0 auto; }
+    .dc { background: #fafeff; border: 1.5px solid #b8daf4; border-radius: 10px; padding: 6px 7px; cursor: pointer; min-height: 72px; display: flex; flex-direction: column; position: relative; transition: transform 0.1s, background 0.12s; }
+    .dc:active { transform: scale(0.94); background: #e8f4ff; }
+    .dc.tdy { background: #e0f0ff; border-color: #5aaad8; box-shadow: 0 0 0 2px #90c4e844; }
+    .dc.emp { background: transparent; border: 1.5px dashed #cce4f4; opacity: 0.3; pointer-events: none; }
+    .dn { font-family: 'Dancing Script', cursive; font-size: 1.15rem; font-weight: 700; color: #4a90b8; line-height: 1; }
+    .dn.t { color: #2a70a0; }
+    .today-label { font-size: 0.44rem; font-style: italic; color: #2a70a0; margin-left: 3px; }
+    .task-preview { font-size: 0.58rem; color: #6a90a8; line-height: 1.5; margin-top: 3px; overflow: hidden; flex: 1; }
+    .task-preview-item { display: flex; gap: 3px; align-items: baseline; white-space: nowrap; overflow: hidden; }
+    .task-num-sm { color: #e87aaa; font-weight: 600; flex-shrink: 0; }
+    .task-text-sm { overflow: hidden; text-overflow: ellipsis; }
+    .task-done-sm { text-decoration: line-through; opacity: 0.5; }
+    .more-tasks { color: #e87aaa; font-size: 0.55rem; }
+    .dot { position: absolute; bottom: 5px; right: 6px; width: 5px; height: 5px; border-radius: 50%; background: #f4a8c4; }
+    .cal-hint { text-align: center; font-family: 'Lora', serif; font-style: italic; font-size: 0.72rem; color: #7ab8d8; margin-top: 4px; opacity: 0.9; }
+
+    /* LIST VIEW */
+    .list-container { max-width: 600px; margin: 0 auto; padding: 6px 12px; }
+    .list-day-card { background: #fafeff; border: 1.5px solid #b8daf4; border-radius: 14px; margin-bottom: 9px; overflow: hidden; cursor: pointer; }
+    .list-day-card:active { background: #eef8ff; }
+    .list-day-header { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px 9px; }
+    .list-day-name { font-family: 'Dancing Script', cursive; font-size: 1.2rem; font-weight: 700; color: #4a90b8; }
+    .list-day-name.t { color: #2a70a0; }
+    .list-day-date { font-family: 'Lora', serif; font-style: italic; font-size: 0.7rem; color: #90b8d0; }
+    .list-task-count { font-size: 0.7rem; color: #e87aaa; font-style: italic; font-family: 'Lora', serif; }
+    .list-task-area { padding: 0 16px 11px; }
+    .list-task-row { display: flex; gap: 10px; align-items: center; padding: 3px 0; }
+    .list-task-num { font-family: 'Dancing Script', cursive; font-size: 1rem; color: #e87aaa; font-weight: 700; min-width: 18px; }
+    .list-task-text { font-family: 'Lora', serif; font-size: 0.84rem; color: #2a4a6a; line-height: 1.5; }
+    .list-task-text.done { text-decoration: line-through; opacity: 0.5; }
+    .list-empty { font-family: 'Lora', serif; font-style: italic; font-size: 0.76rem; color: #b0cce0; padding: 0 16px 11px; }
+    .list-note-preview { font-family: 'Lora', serif; font-style: italic; font-size: 0.76rem; color: #7aaac0; padding: 0 16px 11px; border-top: 1px dashed #cce4f4; margin-top: 4px; padding-top: 8px; }
+
+    /* MODAL — fixed position, won't move with keyboard */
+    .ov { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(20,50,90,0.38); z-index: 200; display: flex; align-items: flex-end; justify-content: center; animation: fi 0.2s ease; }
+    @keyframes fi { from { opacity: 0 } to { opacity: 1 } }
+    @keyframes su { from { transform: translateY(80px); opacity: 0 } to { transform: translateY(0); opacity: 1 } }
+    .mc { background: #fafeff; border-radius: 24px 24px 0 0; width: 100%; max-width: 620px; box-shadow: 0 -8px 40px rgba(60,120,180,0.15); animation: su 0.28s ease; display: flex; flex-direction: column; height: 70vh; position: relative; }
+    .mh-day { background: linear-gradient(135deg,#7dc4e8,#5aaad0); border-radius: 24px 24px 0 0; padding: 14px 18px 12px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .mh-goals { background: linear-gradient(135deg,#f4a8c4,#e87aaa); border-radius: 24px 24px 0 0; padding: 14px 18px 12px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .mdn { font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #fff; font-weight: 700; line-height: 1; }
+    .mds { font-family: 'Lora', serif; font-style: italic; font-size: 0.72rem; color: rgba(255,255,255,0.8); margin-top: 2px; }
+    .sbtn { background: #fff; border: none; border-radius: 22px; padding: 8px 18px; font-family: 'Lora', serif; font-size: 0.88rem; font-weight: 600; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); flex-shrink: 0; }
+    .sbtn-day { color: #4a90b8; }
+    .sbtn-goals { color: #e87aaa; }
+    .sbtn:active { transform: scale(0.96); }
+
+    /* TABS inside modal */
+    .modal-tabs { display: flex; background: #f0f8ff; flex-shrink: 0; border-bottom: 1.5px solid #d0e8f8; }
+    .modal-tab { flex: 1; padding: 9px; text-align: center; font-family: 'Lora', serif; font-size: 0.8rem; color: #7ab8d8; cursor: pointer; border-bottom: 2.5px solid transparent; transition: all 0.15s; }
+    .modal-tab.active { color: #4a90b8; border-bottom-color: #4a90b8; font-weight: 600; background: #fafeff; }
+
+    .task-list-scroll { flex: 1; overflow-y: auto; padding: 14px 18px 8px; -webkit-overflow-scrolling: touch; }
+
+    /* TASK ROWS with checkbox */
+    .task-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .task-number-day { font-family: 'Dancing Script', cursive; font-size: 1.3rem; font-weight: 700; color: #7dc4e8; min-width: 24px; line-height: 1; padding-top: 2px; flex-shrink: 0; }
+    .task-number-goal { font-family: 'Dancing Script', cursive; font-size: 1.3rem; font-weight: 700; color: #f4a8c4; min-width: 24px; line-height: 1; padding-top: 2px; flex-shrink: 0; }
+
+    /* CHECKBOX */
+    .task-check { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #90c4e8; background: white; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+    .task-check.checked { background: linear-gradient(135deg,#90c4e8,#f4a8c4); border-color: transparent; }
+    .task-check.checked::after { content: '✓'; color: white; font-size: 0.7rem; font-weight: bold; }
+
+    .task-input-day { flex: 1; border: none; border-bottom: 1.5px solid #c4e0f4; background: transparent; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #2a4a6a; outline: none; padding: 4px 2px; line-height: 1.5; width: 100%; }
+    .task-input-day.done-input { text-decoration: line-through; opacity: 0.5; }
+    .task-input-day::placeholder { color: #a8cce0; font-style: italic; }
+    .task-input-day:focus { border-bottom-color: #7dc4e8; }
+    .task-input-goals { flex: 1; border: none; border-bottom: 1.5px solid #f8d0e0; background: transparent; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #6a2a4a; outline: none; padding: 4px 2px; line-height: 1.5; width: 100%; }
+    .task-input-goals::placeholder { color: #f0b8cc; font-style: italic; }
+    .task-input-goals:focus { border-bottom-color: #e87aaa; }
+
+    /* NOTES AREA */
+    .notes-area { flex: 1; display: flex; flex-direction: column; padding: 14px 18px; }
+    .notes-label { font-family: 'Dancing Script', cursive; font-size: 1.1rem; color: #7dc4e8; margin-bottom: 8px; }
+    .notes-textarea { flex: 1; border: 1.5px solid #c4e0f4; border-radius: 12px; background: #f5faff; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #2a4a6a; outline: none; padding: 12px; line-height: 1.7; resize: none; min-height: 160px; -webkit-overflow-scrolling: touch; }
+    .notes-textarea::placeholder { color: #a8cce0; font-style: italic; }
+    .notes-textarea:focus { border-color: #7dc4e8; }
+
+    .modal-hint { text-align: center; font-size: 0.68rem; color: #a0b8c8; font-style: italic; padding: 4px 20px 10px; flex-shrink: 0; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-dots">· · · · · ·</div>
+    <div class="header-month">March</div>
+    <div class="header-year">2 0 2 6</div>
+    <div class="header-dots" style="margin-top:8px">· · · · · ·</div>
+  </div>
+
+  <!-- TOGGLE -->
+  <div class="toggle-bar">
+    <button class="tog-btn active" id="btn-cal" onclick="switchView('calendar')">📅 Calendar</button>
+    <button class="tog-btn" id="btn-list" onclick="switchView('list')">📋 List</button>
+  </div>
+
+  <!-- GOALS BOX -->
+  <div class="goals-box" onclick="openGoals()">
+    <div class="goals-deco"></div>
+    <div class="goals-deco2"></div>
+    <div class="goals-box-header">
+      <div class="goals-title">🌸 My March Goals</div>
+      <div class="goals-edit-hint" id="goals-hint">tap to add</div>
+    </div>
+    <div id="goals-display">
+      <div class="goals-empty">What do you want to achieve this month? ✨</div>
+    </div>
+  </div>
+
+  <!-- CALENDAR VIEW -->
+  <div id="view-calendar">
+    <div class="dow-row">
+      <div class="dow-cell">Sun</div><div class="dow-cell">Mon</div><div class="dow-cell">Tue</div>
+      <div class="dow-cell">Wed</div><div class="dow-cell">Thu</div><div class="dow-cell">Fri</div>
+      <div class="dow-cell">Sat</div>
+    </div>
+    <div class="cal-grid" id="cal-grid"></div>
+    <div class="cal-hint">Tap any day to add tasks & notes ✦</div>
+  </div>
+
+  <!-- LIST VIEW -->
+  <div id="view-list" class="hidden">
+    <div class="list-container" id="list-container"></div>
+  </div>
+
+  <!-- DAY MODAL -->
+  <div class="ov hidden" id="day-modal" onclick="closeDay()">
+    <div class="mc" onclick="event.stopPropagation()">
+      <div class="mh-day">
+        <div>
+          <div class="mdn" id="modal-day-title">Monday, March 1</div>
+          <div class="mds" id="modal-day-sub">0 tasks completed</div>
+        </div>
+        <button class="sbtn sbtn-day" onclick="closeDay()">Save ✓</button>
+      </div>
+
+      <!-- TABS -->
+      <div class="modal-tabs">
+        <div class="modal-tab active" id="tab-tasks" onclick="switchTab('tasks')">✅ Tasks</div>
+        <div class="modal-tab" id="tab-notes" onclick="switchTab('notes')">📝 Notes</div>
+      </div>
+
+      <!-- TASKS TAB -->
+      <div id="panel-tasks" class="task-list-scroll"></div>
+
+      <!-- NOTES TAB -->
+      <div id="panel-notes" class="notes-area hidden">
+        <div class="notes-label">📝 Notes for the day</div>
+        <textarea class="notes-textarea" id="notes-textarea" placeholder="Write anything — thoughts, reminders, ideas…"></textarea>
+      </div>
+
+      <div class="modal-hint" id="modal-hint-text">Enter = new task · Tap circle to tick off · Save when done</div>
+    </div>
+  </div>
+
+  <!-- GOALS MODAL -->
+  <div class="ov hidden" id="goals-modal" onclick="closeGoals()">
+    <div class="mc" onclick="event.stopPropagation()">
+      <div class="mh-goals">
+        <div>
+          <div class="mdn">🌸 My March Goals</div>
+          <div class="mds">Press Enter to add a new goal</div>
+        </div>
+        <button class="sbtn sbtn-goals" onclick="closeGoals()">Save ✓</button>
+      </div>
+      <div class="task-list-scroll" id="goals-task-list"></div>
+      <div class="modal-hint">Enter = new goal · Backspace on empty = delete · Save when done</div>
+    </div>
+  </div>
+
+<script>
+  const DAY_NAMES = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const STORAGE_KEY  = "march2026_tasks_v4";
+  const DONE_KEY     = "march2026_done_v4";
+  const GOALS_KEY    = "march2026_goals_v4";
+  const NOTES_KEY    = "march2026_notes_v4";
+
+  let tasks = {};
+  let done  = {};
+  let goals = [];
+  let notes = {};
+  let currentDay  = null;
+  let currentView = "calendar";
+  let currentTab  = "tasks";
+
+  try { tasks = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch {}
+  try { done  = JSON.parse(localStorage.getItem(DONE_KEY))    || {}; } catch {}
+  try { goals = JSON.parse(localStorage.getItem(GOALS_KEY))   || []; } catch {}
+  try { notes = JSON.parse(localStorage.getItem(NOTES_KEY))   || {}; } catch {}
+
+  function saveTasks() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks)); } catch {} }
+  function saveDone()  { try { localStorage.setItem(DONE_KEY,    JSON.stringify(done));  } catch {} }
+  function saveGoals() { try { localStorage.setItem(GOALS_KEY,   JSON.stringify(goals)); } catch {} }
+  function saveNotes() { try { localStorage.setItem(NOTES_KEY,   JSON.stringify(notes)); } catch {} }
+
+  const today = new Date();
+  function isToday(d) { return today.getFullYear()===2026 && today.getMonth()===2 && today.getDate()===d; }
+
+  const march = [];
+  for (let i = 1; i <= 31; i++) march.push({ day: i, dow: new Date(2026,2,i).getDay() });
+
+  // ── VIEWS ──
+  function switchView(v) {
+    currentView = v;
+    document.getElementById('view-calendar').classList.toggle('hidden', v !== 'calendar');
+    document.getElementById('view-list').classList.toggle('hidden', v !== 'list');
+    document.getElementById('btn-cal').classList.toggle('active', v === 'calendar');
+    document.getElementById('btn-list').classList.toggle('active', v === 'list');
+    v === 'list' ? renderList() : renderCalendar();
+  }
+
+  // ── MODAL TABS ──
+  function switchTab(tab) {
+    currentTab = tab;
+    document.getElementById('tab-tasks').classList.toggle('active', tab === 'tasks');
+    document.getElementById('tab-notes').classList.toggle('active', tab === 'notes');
+    document.getElementById('panel-tasks').classList.toggle('hidden', tab !== 'tasks');
+    document.getElementById('panel-notes').classList.toggle('hidden', tab !== 'notes');
+    document.getElementById('modal-hint-text').classList.toggle('hidden', tab !== 'tasks');
+    if (tab === 'notes') {
+      setTimeout(() => document.getElementById('notes-textarea').focus(), 100);
+    }
+  }
+
+  // ── CALENDAR ──
+  function renderCalendar() {
+    const grid = document.getElementById('cal-grid');
+    grid.innerHTML = '';
+    const firstDow = march[0].dow;
+    const cells = [];
+    for (let i = 0; i < firstDow; i++) cells.push(null);
+    march.forEach(d => cells.push(d.day));
+    while (cells.length % 7 !== 0) cells.push(null);
+
+    cells.forEach(day => {
+      const div = document.createElement('div');
+      if (!day) { div.className = 'dc emp'; grid.appendChild(div); return; }
+      div.className = 'dc' + (isToday(day) ? ' tdy' : '');
+      div.onclick = () => openDay(day);
+
+      const dn = document.createElement('div');
+      dn.className = 'dn' + (isToday(day) ? ' t' : '');
+      dn.textContent = day;
+      if (isToday(day)) {
+        const sp = document.createElement('span');
+        sp.className = 'today-label';
+        sp.textContent = 'today';
+        dn.appendChild(sp);
+      }
+      div.appendChild(dn);
+
+      const dayTasks = tasks[day] || [];
+      const dayDone  = done[day]  || {};
+      if (dayTasks.length > 0) {
+        const preview = document.createElement('div');
+        preview.className = 'task-preview';
+        dayTasks.slice(0,3).forEach((t,i) => {
+          const row = document.createElement('div');
+          row.className = 'task-preview-item';
+          const isDone = dayDone[i];
+          row.innerHTML = `<span class="task-num-sm">${isDone ? '✓' : (i+1)+'.'}</span><span class="task-text-sm${isDone?' task-done-sm':''}">${t}</span>`;
+          preview.appendChild(row);
+        });
+        if (dayTasks.length > 3) {
+          const more = document.createElement('div');
+          more.className = 'more-tasks';
+          more.textContent = `+${dayTasks.length-3} more`;
+          preview.appendChild(more);
+        }
+        div.appendChild(preview);
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        div.appendChild(dot);
+      }
+      grid.appendChild(div);
+    });
+  }
+
+  // ── LIST ──
+  function renderList() {
+    const container = document.getElementById('list-container');
+    container.innerHTML = '';
+    march.forEach(({ day, dow }) => {
+      const card = document.createElement('div');
+      card.className = 'list-day-card';
+      card.onclick = () => openDay(day);
+      const dayTasks = tasks[day] || [];
+      const dayDone  = done[day]  || {};
+      const dayNote  = notes[day] || '';
+      const tod = isToday(day);
+      const doneCount = Object.values(dayDone).filter(Boolean).length;
+
+      let tasksHtml = '';
+      if (dayTasks.length > 0) {
+        tasksHtml = `<div class="list-task-area">${dayTasks.map((t,i) => {
+          const isDone = dayDone[i];
+          return `<div class="list-task-row">
+            <span class="list-task-num">${isDone ? '✓' : (i+1)+'.'}
+            </span><span class="list-task-text${isDone?' done':''}">${t}</span>
+          </div>`;
+        }).join('')}</div>`;
+      } else {
+        tasksHtml = `<div class="list-empty">No tasks yet…</div>`;
+      }
+
+      let noteHtml = '';
+      if (dayNote.trim()) {
+        noteHtml = `<div class="list-note-preview">📝 ${dayNote.substring(0,80)}${dayNote.length>80?'…':''}</div>`;
+      }
+
+      card.innerHTML = `
+        <div class="list-day-header">
+          <div>
+            <div class="list-day-name${tod?' t':''}">
+              ${DAY_NAMES[dow]}, March ${day}
+              ${tod ? '<span style="font-size:0.48rem;font-style:italic;margin-left:6px;color:#2a70a0">today</span>' : ''}
+            </div>
+            <div class="list-day-date">2026</div>
+          </div>
+          <div class="list-task-count">
+            ${dayTasks.length > 0 ? `${doneCount}/${dayTasks.length} done` : 'tap to add'}
+          </div>
+        </div>
+        ${tasksHtml}
+        ${noteHtml}
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  // ── GOALS DISPLAY ──
+  function renderGoalsDisplay() {
+    const display = document.getElementById('goals-display');
+    const hint = document.getElementById('goals-hint');
+    if (goals.length === 0) {
+      display.innerHTML = '<div class="goals-empty">What do you want to achieve this month? ✨</div>';
+      hint.textContent = 'tap to add';
+    } else {
+      display.innerHTML = '<div class="goals-list">' +
+        goals.map((g,i) => `<div class="goals-item"><span class="goals-num">${i+1}.</span><span class="goals-text">${g}</span></div>`).join('') +
+        '</div>';
+      hint.textContent = 'tap to edit';
+    }
+  }
+
+  // ── UPDATE DONE SUBTITLE ──
+  function updateDoneSubtitle() {
+    const dayTasks = tasks[currentDay] || [];
+    const dayDone  = done[currentDay]  || {};
+    const doneCount = Object.values(dayDone).filter(Boolean).length;
+    document.getElementById('modal-day-sub').textContent =
+      dayTasks.length > 0 ? `${doneCount} of ${dayTasks.length} completed` : 'tap + to add tasks';
+  }
+
+  // ── DAY MODAL ──
+  function openDay(day) {
+    currentDay = day;
+    currentTab = 'tasks';
+    const d = march[day-1];
+    document.getElementById('modal-day-title').textContent = `${DAY_NAMES[d.dow]}, March ${day}`;
+    document.getElementById('notes-textarea').value = notes[day] || '';
+
+    // reset tabs
+    switchTab('tasks');
+
+    renderTaskInputs(tasks[day] || [], 'panel-tasks', 'day');
+    updateDoneSubtitle();
+
+    document.getElementById('day-modal').classList.remove('hidden');
+    setTimeout(() => {
+      const first = document.querySelector('#panel-tasks .task-input-day');
+      if (first) first.focus();
+    }, 180);
+  }
+
+  function closeDay() {
+    // Save tasks
+    const inputs = document.querySelectorAll('#panel-tasks .task-input-day');
+    const vals = Array.from(inputs).map(i => i.value.trim()).filter(Boolean);
+    tasks[currentDay] = vals;
+    saveTasks();
+
+    // Save notes
+    notes[currentDay] = document.getElementById('notes-textarea').value;
+    saveNotes();
+
+    document.getElementById('day-modal').classList.add('hidden');
+    currentView === 'list' ? renderList() : renderCalendar();
+  }
+
+  // ── GOALS MODAL ──
+  function openGoals() {
+    const existing = goals.length > 0 ? [...goals, ''] : [''];
+    renderTaskInputs(existing, 'goals-task-list', 'goals');
+    document.getElementById('goals-modal').classList.remove('hidden');
+    setTimeout(() => {
+      const first = document.querySelector('#goals-task-list .task-input-goals');
+      if (first) first.focus();
+    }, 180);
+  }
+
+  function closeGoals() {
+    const inputs = document.querySelectorAll('#goals-task-list .task-input-goals');
+    const vals = Array.from(inputs).map(i => i.value.trim()).filter(Boolean);
+    goals = vals;
+    saveGoals();
+    document.getElementById('goals-modal').classList.add('hidden');
+    renderGoalsDisplay();
+  }
+
+  // ── RENDER TASK INPUTS ──
+  function renderTaskInputs(items, containerId, type) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+
+    // Show items + one empty line at end
+    const displayItems = [...items, ''];
+
+    displayItems.forEach((val, idx) => {
+      const row = document.createElement('div');
+      row.className = 'task-row';
+
+      const num = document.createElement('div');
+      num.className = type === 'day' ? 'task-number-day' : 'task-number-goal';
+      num.textContent = (idx+1) + '.';
+
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = type === 'day' ? 'task-input-day' : 'task-input-goals';
+      input.value = val;
+      input.placeholder = idx === 0
+        ? (type === 'day' ? 'What are you doing today?' : 'What do you want to achieve this month?')
+        : (type === 'day' ? 'Next task…' : 'Another goal…');
+
+      // Checkbox only for day tasks
+      if (type === 'day' && val.trim() !== '') {
+        const dayDone = done[currentDay] || {};
+        const isDone = dayDone[idx] || false;
+
+        const check = document.createElement('div');
+        check.className = 'task-check' + (isDone ? ' checked' : '');
+        check.onclick = (e) => {
+          e.stopPropagation();
+          if (!done[currentDay]) done[currentDay] = {};
+          done[currentDay][idx] = !done[currentDay][idx];
+          saveDone();
+          check.classList.toggle('checked', done[currentDay][idx]);
+          input.classList.toggle('done-input', done[currentDay][idx]);
+          updateDoneSubtitle();
+        };
+
+        if (isDone) input.classList.add('done-input');
+        row.appendChild(num);
+        row.appendChild(check);
+        row.appendChild(input);
+      } else {
+        row.appendChild(num);
+        row.appendChild(input);
+      }
+
+      input.addEventListener('keydown', (e) => {
+        const sel = type==='day' ? '.task-input-day' : '.task-input-goals';
+        const allInputs = container.querySelectorAll(sel);
+        const currentIdx = Array.from(allInputs).indexOf(e.target);
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const vals = Array.from(allInputs).map(i => i.value);
+          vals.splice(currentIdx+1, 0, '');
+          renderTaskInputs(vals.filter((_,i) => i < vals.length-1), containerId, type);
+          const newInputs = container.querySelectorAll(sel);
+          if (newInputs[currentIdx+1]) newInputs[currentIdx+1].focus();
+        } else if (e.key === 'Backspace' && e.target.value === '') {
+          const allI = container.querySelectorAll(sel);
+          if (allI.length > 1) {
+            e.preventDefault();
+            const vals = Array.from(allI).map(i => i.value);
+            vals.splice(currentIdx, 1);
+            renderTaskInputs(vals.filter((_,i) => i < vals.length), containerId, type);
+            const newInputs = container.querySelectorAll(sel);
+            const focusIdx = Math.max(0, currentIdx-1);
+            if (newInputs[focusIdx]) newInputs[focusIdx].focus();
+          }
+        }
+      });
+
+      container.appendChild(row);
+    });
+  }
+
+  // ── INIT ──
+  renderCalendar();
+  renderGoalsDisplay();
+</script>
+</body>
+</html>
