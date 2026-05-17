@@ -41,6 +41,12 @@
     .view{display:none;}
     .view.active{display:block;}
 
+    /* DAY NAV BAR */
+    .day-nav-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 20px 8px;border-bottom:1px solid var(--border);}
+    .day-nav-label{font-family:'Dancing Script',cursive;font-size:1.3rem;color:var(--text);font-weight:700;text-align:center;flex:1;}
+    .day-nav-arr{background:transparent;border:none;color:var(--coral);font-size:1.6rem;cursor:pointer;padding:2px 10px;font-weight:700;line-height:1;}
+    .day-nav-arr:active{opacity:0.6;}
+
     /* DAY TABS */
     .dtabs{display:flex;border-bottom:1.5px solid var(--border);background:var(--bg);position:sticky;top:var(--hh);z-index:50;}
     .dtab{flex:1;padding:11px 0;text-align:center;font-family:'Lora',serif;font-size:0.88rem;color:var(--text2);cursor:pointer;border:none;background:transparent;border-bottom:3px solid transparent;}
@@ -224,6 +230,11 @@
 
   <!-- TODAY -->
   <div class="view active" id="view-today">
+    <div class="day-nav-bar">
+      <button class="day-nav-arr" onclick="prevDay()">‹</button>
+      <div class="day-nav-label" id="day-nav-label">Today</div>
+      <button class="day-nav-arr" onclick="nextDay()">›</button>
+    </div>
     <div class="dtabs">
       <button class="dtab active" id="dtab-tasks" onclick="switchDTab('tasks','today')">✅ Tasks</button>
       <button class="dtab" id="dtab-time" onclick="switchDTab('time','today')">🕐 Time</button>
@@ -328,6 +339,8 @@ var curMonth=(todayY===YEAR)?todayM:2;
 var goalsMonth=(todayY===YEAR)?todayM:2;
 var curView='today',prevView='today',weekOff=0;
 var openDay=null,openMonth=null;
+/* viewDay/viewMonth = which day is shown in Today tab */
+var viewDay=todayD,viewMonth=(todayY===YEAR)?todayM:2;
 
 var S={
   get:function(k,d){try{var r=localStorage.getItem(k);return r!==null?JSON.parse(r):d;}catch(e){return d;}},
@@ -384,13 +397,13 @@ function switchDTab(tab,ctx){
     if(panel) panel.classList.toggle('hidden',t!==tab);
   });
   if(tab==='time'){
-    var m=ctx==='today'?todayM:openMonth;
-    var d=ctx==='today'?todayD:openDay;
+    var m=ctx==='today'?viewMonth:openMonth;
+    var d=ctx==='today'?viewDay:openDay;
     renderTimeList(ctx==='today'?'today-timelist':'day-timelist',m,d);
   }
   if(tab==='notes'){
-    var m=ctx==='today'?todayM:openMonth;
-    var d=ctx==='today'?todayD:openDay;
+    var m=ctx==='today'?viewMonth:openMonth;
+    var d=ctx==='today'?viewDay:openDay;
     var taId=ctx==='today'?'today-nta':'day-nta';
     var notes=getNotes(m);
     var ta=document.getElementById(taId);
@@ -514,8 +527,44 @@ function renderTaskList(wrId,m,d,ctx){
   wrap.appendChild(ntrow);
 }
 
+function updateDayNavLabel(){
+  var lbl=document.getElementById('day-nav-label');
+  if(!lbl) return;
+  if(viewDay===todayD&&viewMonth===todayM&&todayY===YEAR){
+    lbl.textContent='Today';
+  } else {
+    lbl.textContent=DAY_NAMES[getDow(viewMonth,viewDay)]+', '+MONTH_NAMES[viewMonth]+' '+viewDay;
+  }
+}
+
+function prevDay(){
+  var d=new Date(YEAR,viewMonth,viewDay-1);
+  if(d.getFullYear()!==YEAR) return;
+  viewDay=d.getDate(); viewMonth=d.getMonth();
+  updateDayNavLabel();
+  renderToday();
+}
+
+function nextDay(){
+  var d=new Date(YEAR,viewMonth,viewDay+1);
+  if(d.getFullYear()!==YEAR) return;
+  viewDay=d.getDate(); viewMonth=d.getMonth();
+  updateDayNavLabel();
+  renderToday();
+}
+
 function renderToday(){
-  renderTaskList('today-tlist',todayM,todayD,'today');
+  updateDayNavLabel();
+  renderTaskList('today-tlist',viewMonth,viewDay,'today');
+  /* Refresh time and notes if those tabs are active */
+  if(!document.getElementById('dpanel-time').classList.contains('hidden'))
+    renderTimeList('today-timelist',viewMonth,viewDay);
+  if(!document.getElementById('dpanel-notes').classList.contains('hidden')){
+    var notes=getNotes(viewMonth);
+    var ta=document.getElementById('today-nta');
+    ta.value=notes[viewDay]||'';
+    ta.oninput=function(){var n=getNotes(viewMonth);n[viewDay]=this.value;S.set(mk('notes',viewMonth),n);};
+  }
 }
 
 function openDayView(day,m){
@@ -533,8 +582,8 @@ function openDayView(day,m){
 }
 
 function clearDone(ctx){
-  var m=ctx==='today'?todayM:openMonth;
-  var d=ctx==='today'?todayD:openDay;
+  var m=ctx==='today'?viewMonth:openMonth;
+  var d=ctx==='today'?viewDay:openDay;
   var tasks=getTasks(m),done=getDone(m);
   var dt=tasks[d]||[],dd=done[d]||{};
   tasks[d]=dt.filter(function(_,i){return !dd[i];});
