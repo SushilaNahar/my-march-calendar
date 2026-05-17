@@ -421,7 +421,6 @@ function renderTaskList(wrId,m,d,ctx){
 
     var chk=document.createElement('div');
     chk.className='tchk'+(isDone?' on':'');
-    if(isDone) chk.textContent='✓';
     chk.onclick=(function(idx){return function(){
       var dn=getDone(m);if(!dn[d])dn[d]={};
       dn[d][idx]=!dn[d][idx];S.set(mk('done',m),dn);
@@ -489,7 +488,6 @@ function renderTaskList(wrId,m,d,ctx){
       var dn=getDone(m);if(!dn[d])dn[d]={};
       dn[d][idx]=!dn[d][idx];S.set(mk('done',m),dn);
       this.classList.toggle('on',dn[d][idx]);
-      this.textContent=dn[d][idx]?'✓':'';
       ni2.classList.toggle('done',dn[d][idx]);
     };})(newIdx);
     var ni2=document.createElement('input');
@@ -638,7 +636,7 @@ function renderWeek(){
       ?'<div class="wdtasks">'+dt.slice(0,4).map(function(t,i){
           var isDone=dd[i];
           return '<div class="wtline">'+
-            '<div class="wtchk'+(isDone?' on':'')+'" onclick="event.stopPropagation();toggleWk('+m+','+day+','+i+')">'+(isDone?'✓':'')+'</div>'+
+            '<div class="wtchk'+(isDone?' on':'')+'" onclick="event.stopPropagation();toggleWk('+m+','+day+','+i+')"></div>'+
             '<span class="wttxt'+(isDone?' done':'')+'">'+t+'</span></div>';
         }).join('')+(dt.length>4?'<div class="wttxt" style="color:var(--text2);font-style:italic">+'+(dt.length-4)+' more</div>':'')+'</div>'
       :'<div class="wdempty">No tasks — tap to add</div>';
@@ -667,7 +665,6 @@ function renderList(wrId,items,doneObj,type){
     if(hasCheck){
       var chk=document.createElement('div');
       chk.className='lchk'+(isDone?' on':'');
-      if(isDone) chk.textContent='✓';
       chk.onclick=(function(idx){return function(){
         var dn=type==='todo'?getTodone():getBdone();
         dn[idx]=!dn[idx];
@@ -745,7 +742,7 @@ function renderList(wrId,items,doneObj,type){
       nc.onclick=(function(i2,t2){return function(){
         var dn=t2==='todo'?getTodone():getBdone();
         dn[i2]=!dn[i2];S.set(t2==='todo'?'pln26_todone':'pln26_bdone',dn);
-        this.classList.toggle('on',dn[i2]);this.textContent=dn[i2]?'✓':'';
+        this.classList.toggle('on',dn[i2]);
         ni2.classList.toggle('done',dn[i2]);
       };})(idx,type);
       newRow.appendChild(nn);newRow.appendChild(nc);
